@@ -12,7 +12,7 @@ angular.module('app.controllers', ['pascalprecht.translate', 'ngCookies'])
 
       // config
       $scope.app = {
-        name: 'Angulr',
+        name: '微情警务通',
         version: '1.3.0',
         // for chart colors
         color: {
