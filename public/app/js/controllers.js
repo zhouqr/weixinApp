@@ -102,6 +102,13 @@ angular.module('app.controllers', ['pascalprecht.translate', 'ngCookies'])
       isFirstDisabled: false
     };
   }])
+  //获取专题列表
+  .controller('TopicListCtrl', ['$scope','$http', function($scope,$http) {
+	  var path = 'js/app/topic/topics.json';
+	  var topics = $http.get(path).then(function (resp) {
+	    $scope.topics = resp.data.topics;
+	  });
+  }])
   .controller('AlertDemoCtrl', ['$scope', function($scope) {
     $scope.alerts = [
       { type: 'success', msg: 'Well done! You successfully read this important alert message.' },

@@ -1,0 +1,23 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">专题 — 整合信息，聚焦事件，让您对事件的发展一目了然</h1>
+</div>
+
+<div ng-controller="TopicListCtrl">
+   <!-- list -->
+  <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
+    <li ng-repeat="topic in topics | filter:fold" ng-class="labelClass(topic.todayCount)" class="list-group-item clearfix b-l-3x">
+      <a ui-sref="app.page.profile" class="avatar thumb pull-left m-r">
+        <img ng-src="{{topic.image}}">
+      </a>
+      <div class="pull-right text-sm text-muted">
+        <span class="hidden-xs"></span>
+        <i class="fa fa-paperclip ng-hide m-l-sm" ng-show=""></i>
+      </div>
+      <div class="clear">
+        <div><a ui-sref="#" class="text-md">{{topic.title}}</a><span class="label bg-light m-l-sm">+{{topic.todayCount}}</span></div>
+        <div class="text-ellipsis m-t-xs">{{topic.content | limitTo:100}}</div>
+      </div>      
+    </li>
+  </ul>
+  <!-- / list -->
+</div>

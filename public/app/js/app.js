@@ -45,7 +45,11 @@ var app = angular.module('app', [
             .state('app', {
                 abstract: true,
                 url: '/app',
-                templateUrl: 'tpl/app.html'
+                templateUrl: 'tpl/app-weixin.html'
+            })
+            .state('app.topics', {
+                url: '/topics',
+                templateUrl: 'tpl/app_topics.html'
             })
             .state('app.dashboard-v1', {
                 url: '/dashboard-v1',
