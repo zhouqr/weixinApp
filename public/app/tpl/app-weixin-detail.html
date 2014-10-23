@@ -1,0 +1,45 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3"><i class="icon-magnifier i-sm m-r-sm"></i> 搜索</h1>
+</div>
+<div class="wrapper-md"  ng-controller="WeiXinSearchCtrl">
+  <form action="#" class="m-b-md">
+    <div class="input-group">
+      <input type="text" class="form-control input-lg" placeholder="输入关键词">
+      <span class="input-group-btn">
+        <button class="btn btn-lg btn-default" type="button">搜索</button>
+      </span>
+    </div>
+  </form>
+  <article ng-repeat="weixin in weixins.slice(0,1)" class="media" style="border:1px solid #CCC;">
+        <div class="pull-left">
+            <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{weixin.image}}">
+        </div>
+        <div class="media-body">
+            <a href="#" target="blank" class="h4">{{weixin.name}}</a>
+            <small class="block m-t-xs text-muted">微信号：{{weixin.id}}</small>
+            <small class="block m-t-xs">功能介绍：<span>{{weixin.abs}}</span></small>
+            <small class="block m-t-xs">微信认证：{{weixin.vip}}</small>
+            <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small>
+        </div>
+
+    </article>
+
+    <div class="panel panel-default" style="margin-top: 10px;">
+        <div class="panel-heading font-bold">
+            最近文章
+        </div>
+        <div class="panel-body">
+            <article ng-repeat="doc in topic.newArticles" class="media">
+                <div class="pull-left">
+                    <img style="margin-bottom:5px" ng-src="{{topic.image}}">
+                </div>
+                <div class="media-body">
+                    <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title}}</a>
+                    <small class="block m-t-xs">摘要：{{doc.title}}</small>
+                    <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <span class="text-info">{{doc.source_name}}</span></span>
+                </div>
+                <div class="line b-b"></div>
+            </article>
+        </div>
+    </div>
+</div>

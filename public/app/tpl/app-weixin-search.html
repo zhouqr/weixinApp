@@ -10,7 +10,7 @@
       </span>
     </div>
   </form>
-  <p class="m-b-md"><strong>23</strong> 条结果: <strong>Keyword</strong></p>
+  <p class="m-b-md"><strong>23</strong> 条结果: <strong>房地产</strong></p>
   <tabset class="tab-container">
     <tab>
       <tab-heading>
@@ -23,7 +23,7 @@
             <div class="media-body">
                 <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title}}</a>
                 <small class="block m-t-xs">摘要：{{doc.title}}</small>
-                <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <span class="text-info">{{doc.source_name}}</span></span>
+                <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <a href="#/app/weixin-detail" class="text-info">{{doc.source_name}}</a></span>
             </div>
             <div class="line b-b"></div>
         </article>
@@ -37,7 +37,7 @@
                 <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{weixin.image}}">
             </div>
             <div class="media-body">
-                <a href="#" target="blank" class="h4">{{weixin.name}}</a>
+                <a href="#/app/weixin-detail" class="h4">{{weixin.name}}</a>
                 <small class="block m-t-xs text-muted">微信号：{{weixin.id}}</small>
                 <small class="block m-t-xs">功能介绍：<span>{{weixin.abs}}</span></small>
                 <small class="block m-t-xs">微信认证：{{weixin.vip}}</small>

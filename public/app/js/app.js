@@ -59,6 +59,10 @@ var app = angular.module('app', [
                 url: '/weixin-search',
                 templateUrl: 'tpl/app-weixin-search.html'
             })
+            .state('app.weixin-detail', {
+                url: '/weixin-detail',
+                templateUrl: 'tpl/app-weixin-detail.html'
+            })
             .state('app.app-weixin-add', {
                 url: '/app-weixin-add',
                 templateUrl: 'tpl/app-weixin-add.html'
