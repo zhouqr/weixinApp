@@ -1,0 +1,161 @@
+<div class="font-bold">
+      <!-- breadcrumb -->
+        <ul class="breadcrumb b-a">
+          <span>当前位置：</span>
+          <li><a href="#"><i class="fa fa-home"></i>专题</a></li>
+          <li><a href>插件配置</a></li>
+        </ul>
+      <!-- / breadcrumb -->
+</div>
+<div class="wrapper-md">
+  <div ng-controller="FlotChartDemoCtrl">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading b-b b-light">
+		          <label class="i-switch m-t-xs m-r pull-right">
+		            <input type="checkbox"  ng-model="pubilsh">
+		            <i></i>
+		          </label>
+		          <a href="" class="font-bold ">微博统计分析图</a>
+          </div>
+          <div class="panel-body">
+            <div ui-jq="plot" ui-options="
+              [
+                { data: {{d}}, points: { show: true, radius: 6}, splines: { show: true, tension: 0.45, lineWidth: 5, fill: 0 } }
+              ], 
+              {
+                colors: ['{{app.color.info}}'],
+                series: { shadowSize: 3 },
+                xaxis:{ 
+                  font: { color: '#ccc' },
+                  position: 'bottom',
+                  ticks: [
+                    [ 1, 'Jan' ], [ 2, 'Feb' ], [ 3, 'Mar' ], [ 4, 'Apr' ], [ 5, 'May' ], [ 6, 'Jun' ], [ 7, 'Jul' ], [ 8, 'Aug' ], [ 9, 'Sep' ], [ 10, 'Oct' ], [ 11, 'Nov' ], [ 12, 'Dec' ]
+                  ]
+                },
+                yaxis:{ font: { color: '#ccc' } },
+                grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                tooltip: true,
+                tooltipOpts: { content: '%x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+              }
+            " style="height:240px" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading b-b b-light">
+              <label class="i-switch m-t-xs m-r pull-right">
+                <input type="checkbox"  ng-model="pubilsh2">
+                <i></i>
+              </label>
+              <a href="" class="font-bold ">用户媒体关注图</a>
+          </div>
+          <div class="panel-body">
+            <div ui-jq="plot" ui-options="
+              [
+                { data: {{d0_1}}, label: 'A', points: { show: true }, lines: { show: true, fill: true, fillColor: { colors: [{ opacity: 0.1 }, { opacity: 0.1}] } } }, 
+                { data: {{d0_2}}, label: 'B', points: { show: true, radius: 4 } }
+              ],
+              {
+                colors: [ '{{app.color.info}}','{{app.color.warning}}' ],
+                series: { shadowSize: 2 },
+                xaxis:{ font: { color: '#ccc' } },
+                yaxis:{ font: { color: '#ccc' } },
+                grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                tooltip: true,
+                tooltipOpts: { content: '%s of %x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+              }
+            " style="height:240px"></div>
+          </div>                  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+         <div class="panel-heading b-b b-light">
+              <label class="i-switch m-t-xs m-r pull-right">
+                <input type="checkbox"  ng-model="pubilsh3">
+                <i></i>
+              </label>
+              <a href="" class="font-bold ">扩散图</a>
+          </div>
+        <div class="panel-body text-center">              
+          <div ng-init="data1=[60,40]" ui-jq="sparkline" ui-options="{{data1}}, {type:'pie', height:154, sliceColors:['{{app.color.info}}','#eaeeea']}" class="sparkline inline"></div>
+          <div class="line pull-in"></div>
+          <div class="text-xs">
+            <i class="fa fa-circle text-info"></i> 60%
+            <i class="fa fa-circle text-muted m-l"></i> 40%
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+         <div class="panel-heading b-b b-light">
+              <label class="i-switch m-t-xs m-r pull-right">
+                <input type="checkbox"  ng-model="pubilsh4">
+                <i></i>
+              </label>
+              <a href="" class="font-bold ">地域分布图</a>
+          </div>
+        <div class="panel-body">
+           <img alt="" src="img/temp/4.jpg" class = "img-full" style="height:193px;">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+        <div class="panel-heading b-b b-light">
+            <label class="i-switch m-t-xs m-r pull-right">
+              <input type="checkbox"  ng-model="pubilsh5">
+              <i></i>
+            </label>
+            <a href="" class="font-bold ">热点微博排行图</a>
+         </div>
+        <div class="panel-body">
+            <img alt="" src="img/temp/5.jpg" class = "img-full" style="height:193px;">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+     <div class="col-lg-6">
+         <div class="panel panel-default">
+        <div class="panel-heading b-b b-light">
+            <label class="i-switch m-t-xs m-r pull-right">
+              <input type="checkbox"  ng-model="pubilsh6">
+              <i></i>
+            </label>
+            <a href="" class="font-bold ">焦点文章列表</a>
+         </div>
+        <div class="panel-body">
+            <img alt="" src="img/temp/6.jpg" class = "img-full" style="height:193px;">
+        </div>
+      </div>  
+     </div>
+     
+     <div class="col-lg-6">
+         <div class="panel panel-default">
+        <div class="panel-heading b-b b-light">
+            <label class="i-switch m-t-xs m-r pull-right">
+              <input type="checkbox"  ng-model="pubilsh7">
+              <i></i>
+            </label>
+            <a href="" class="font-bold ">热门评论</a>
+         </div>
+        <div class="panel-body">
+            <img alt="" src="img/temp/7.jpg" class = "img-full" style="height:193px;">
+        </div>
+      </div>  
+     </div>
+  </div>
+  
+</div>

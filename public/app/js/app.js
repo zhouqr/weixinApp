@@ -51,6 +51,18 @@ var app = angular.module('app', [
                 url: '/topics',
                 templateUrl: 'tpl/app_topics.html'
             })
+             .state('app.topics-detail', {
+                url: '/topics-detail',
+                templateUrl: 'tpl/topic-detail.html'
+            })
+            .state('app.app-weixin-add', {
+                url: '/app-weixin-add',
+                templateUrl: 'tpl/app-weixin-add.html'
+            })
+            .state('app.app-weixin-add-plugin', {
+                url: '/app-weixin-add-plugin',
+                templateUrl: 'tpl/app-weixin-add-plugin.html'
+            })
             .state('app.dashboard-v1', {
                 url: '/dashboard-v1',
                 templateUrl: 'tpl/app_dashboard_v1.html'

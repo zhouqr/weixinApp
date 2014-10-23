@@ -1,0 +1,119 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="TopicDetailCtrl">
+  <div class="col">
+    <div style="background:url(img/c4.jpg) center center; background-size:cover">
+      <div class="wrapper-lg bg-white-opacity">
+        <div class="row m-t">
+          <div class="col-sm-7">
+            <a href class="thumb-lg pull-left m-r">
+              <img src="img/a0.jpg" class="img-circle">
+            </a>
+            <div class="clear m-b">
+              <div class="m-b m-t-sm">
+                <span class="h3 text-black">{{topic.title}}</span>
+              </div>
+               <div class="m-b m-t-sm">
+                <span class="h5 text-black">创建日期：{{topic.date}}</span>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="pull-right pull-none-xs text-center">
+              <a href="#/" title="修改" class="m-b-md inline m">
+        		<i class="glyphicon glyphicon-pencil"></i>
+              </a>
+              <a href="#/" title="删除" class="m-b-md inline m">
+		        <i class="glyphicon glyphicon-remove-circle"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- 配置图表-->
+     <div class="panel panel-default" style="margin-top: 5px;">
+          <div class="panel-heading" style="text-align:right">
+              <a href="#/app/app-weixin-add-plugin" class="btn m-b-xs w-xs btn-default btn-rounded">配置插件</a>
+          </div>
+    </div>
+<!-- 图表-->
+    <div ng-controller="FlotChartDemoCtrl" style="margin-top: 5px;">
+      <div class="row">
+          <div class="col-md-6">
+              <div class="panel panel-default">
+                  <div class="panel-heading font-bold">专题文章趋势</div>
+                  <div class="panel-body">
+                      <div ui-jq="plot" ui-options="
+              [
+                { data: {{d}}, points: { show: true, radius: 6}, splines: { show: true, tension: 0.45, lineWidth: 5, fill: 0 } }
+              ],
+              {
+                colors: ['{{app.color.info}}'],
+                series: { shadowSize: 3 },
+                xaxis:{
+                  font: { color: '#ccc' },
+                  position: 'bottom',
+                  ticks: [
+                    [ 1, 'Jan' ], [ 2, 'Feb' ], [ 3, 'Mar' ], [ 4, 'Apr' ], [ 5, 'May' ], [ 6, 'Jun' ], [ 7, 'Jul' ], [ 8, 'Aug' ], [ 9, 'Sep' ], [ 10, 'Oct' ], [ 11, 'Nov' ], [ 12, 'Dec' ]
+                  ]
+                },
+                yaxis:{ font: { color: '#ccc' } },
+                grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                tooltip: true,
+                tooltipOpts: { content: '%x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+              }
+            " style="height:240px" >
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="panel panel-default">
+                  <div class="panel-heading font-bold">Multiple</div>
+                  <div class="panel-body">
+                      <div ui-jq="plot" ui-options="
+              [
+                { data: {{d0_1}}, label: 'Unique Visits', points: { show: true } },
+                { data: {{d0_2}}, label: 'Page Views', bars: { show: true, barWidth: 0.6, fillColor: { colors: [{ opacity: 0.2 }, { opacity: 0.4}] } } }
+              ],
+              {
+                colors: [ '{{app.color.info}}','{{app.color.success}}' ],
+                series: { shadowSize: 2 },
+                xaxis:{ font: { color: '#ccc' } },
+                yaxis:{ font: { color: '#ccc' } },
+                grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                tooltip: true,
+                tooltipOpts: { content: '%s of %x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+              }
+            " style="height:240px"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+          	最新文章列表
+        </div>
+        <div class="panel-body">
+          <article ng-repeat="doc in topic.newArticles" class="media">
+            <div class="pull-left">
+                <img style="margin-bottom:5px" ng-src="{{topic.image}}">
+            </div>
+            <div class="media-body">                        
+              <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title}}</a>
+              <small class="block m-t-xs">摘要：{{doc.title}}</small>
+              <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <span class="text-info">{{doc.source_name}}</span></span>
+            </div>
+            <div class="line b-b"></div>
+          </article>
+        </div>
+      </div>
+  </div>
+  <div class="col w-lg bg-light lter b-l bg-auto">
+    <div class="wrapper">
+
+    </div>
+  </div>
+</div>

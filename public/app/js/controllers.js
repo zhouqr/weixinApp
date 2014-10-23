@@ -109,6 +109,15 @@ angular.module('app.controllers', ['pascalprecht.translate', 'ngCookies'])
 	    $scope.topics = resp.data.topics;
 	  });
   }])
+  //获取专题列表
+  .controller('TopicDetailCtrl', ['$scope','$http', function($scope,$http) {
+	  var path = 'js/app/topic/topics.json';
+	  var topics = $http.get(path).then(function (resp) {
+	    $scope.topic = resp.data.topics[0];
+	    $scope.topic.date="2014-10-20 12:12:12";
+	    
+	  });
+  }])
   .controller('AlertDemoCtrl', ['$scope', function($scope) {
     $scope.alerts = [
       { type: 'success', msg: 'Well done! You successfully read this important alert message.' },

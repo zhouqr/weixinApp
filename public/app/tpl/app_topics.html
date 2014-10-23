@@ -1,3 +1,5 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
+<div class="col">
 <div class="bg-light lter b-b wrapper-md">
   <h1 class="m-n font-thin h3">专题 — 整合信息，聚焦事件，让您对事件的发展一目了然</h1>
 </div>
@@ -5,19 +7,36 @@
 <div ng-controller="TopicListCtrl">
    <!-- list -->
   <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
-    <li ng-repeat="topic in topics | filter:fold" ng-class="labelClass(topic.todayCount)" class="list-group-item clearfix b-l-3x">
-      <a ui-sref="app.page.profile" class="avatar thumb pull-left m-r">
-        <img ng-src="{{topic.image}}">
-      </a>
-      <div class="pull-right text-sm text-muted">
-        <span class="hidden-xs"></span>
-        <i class="fa fa-paperclip ng-hide m-l-sm" ng-show=""></i>
+    <li ng-repeat="topic in topics" class="list-group-item clearfix b-l-3x">
+      <span class="avatar pull-left m-r">
+        <img style="width:300px;height:200px" ng-src="{{topic.image}}">
+      </span>
+      <div class="pull-right text-muted" style="font-size:15px">
+     	  <a href="#/app/app-weixin-add-plugin" title="修改">
+        	<i class="glyphicon glyphicon-pencil"></i>
+        </a>
+        &nbsp;&nbsp;
+        <a href="#/" title="删除" style="margin-right:10px">
+        	<i class="glyphicon glyphicon-remove-circle"></i>
+        </a>
       </div>
       <div class="clear">
-        <div><a ui-sref="#" class="text-md">{{topic.title}}</a><span class="label bg-light m-l-sm">+{{topic.todayCount}}</span></div>
-        <div class="text-ellipsis m-t-xs">{{topic.content | limitTo:100}}</div>
+        <div><a href="#/app/topics-detail" class="text-md">{{topic.title}}</a><span class="label bg-danger m-l-sm">+{{topic.todayCount}}</span></div>
+        <div class="text-ellipsis m-t-xs">
+        	<ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
+        		<li ng-repeat="doc in topic.newArticles.slice(0,5)" style="padding:5px 0px">
+        			<span class="text-info">{{doc.pubtime}}</span>&nbsp;来自&nbsp;<span class="text-info ">{{doc.source_name}}</span>:&nbsp;<a href="{{doc.content_url}}" target="blank">{{doc.title | limitTo:23}}</a>
+        		</li>
+        	</ul>
+        </div>
       </div>      
     </li>
   </ul>
   <!-- / list -->
+</div>
+
+</div>
+<div class="col w-md bg-white-only b-l bg-auto no-border-xs">
+</div>
+
 </div>
