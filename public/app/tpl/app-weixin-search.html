@@ -1,0 +1,51 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3"><i class="icon-magnifier i-sm m-r-sm"></i> 搜索</h1>
+</div>
+<div class="wrapper-md"  ng-controller="WeiXinSearchCtrl">
+  <form action="#" class="m-b-md">
+    <div class="input-group">
+      <input type="text" class="form-control input-lg" placeholder="输入关键词">
+      <span class="input-group-btn">
+        <button class="btn btn-lg btn-default" type="button">搜索</button>
+      </span>
+    </div>
+  </form>
+  <p class="m-b-md"><strong>23</strong> 条结果: <strong>Keyword</strong></p>
+  <tabset class="tab-container">
+    <tab>
+      <tab-heading>
+        文章 <span class="badge badge-sm m-l-xs">16</span>
+      </tab-heading>
+        <article ng-repeat="doc in topic.newArticles" class="media">
+            <div class="pull-left">
+                <img style="margin-bottom:5px" ng-src="{{topic.image}}">
+            </div>
+            <div class="media-body">
+                <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title}}</a>
+                <small class="block m-t-xs">摘要：{{doc.title}}</small>
+                <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <span class="text-info">{{doc.source_name}}</span></span>
+            </div>
+            <div class="line b-b"></div>
+        </article>
+    </tab>
+    <tab>
+      <tab-heading>
+        公众号 <span class="badge bg-danger badge-sm m-l-xs">6</span>
+      </tab-heading>
+        <article ng-repeat="weixin in weixins" class="media">
+            <div class="pull-left">
+                <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{weixin.image}}">
+            </div>
+            <div class="media-body">
+                <a href="#" target="blank" class="h4">{{weixin.name}}</a>
+                <small class="block m-t-xs text-muted">微信号：{{weixin.id}}</small>
+                <small class="block m-t-xs">功能介绍：<span>{{weixin.abs}}</span></small>
+                <small class="block m-t-xs">微信认证：{{weixin.vip}}</small>
+                <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small>
+            </div>
+            <div class="line b-b"></div>
+        </article>
+    </tab>
+
+  </tabset>
+</div>
