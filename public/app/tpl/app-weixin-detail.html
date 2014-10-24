@@ -6,7 +6,7 @@
     <div class="input-group">
       <input type="text" class="form-control input-lg" placeholder="输入关键词">
       <span class="input-group-btn">
-        <button class="btn btn-lg btn-default" type="button">搜索</button>
+        <a href="#/app/weixin-search" class="btn btn-lg btn-default" type="button">搜索</a>
       </span>
     </div>
   </form>
@@ -15,31 +15,47 @@
             <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{weixin.image}}">
         </div>
         <div class="media-body">
-            <a href="#" target="blank" class="h4">{{weixin.name}}</a>
+            <span class="h4">{{weixin.name}}</span>
             <small class="block m-t-xs text-muted">微信号：{{weixin.id}}</small>
             <small class="block m-t-xs">功能介绍：<span>{{weixin.abs}}</span></small>
             <small class="block m-t-xs">微信认证：{{weixin.vip}}</small>
             <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small>
         </div>
-
-    </article>
+  </article>
 
     <div class="panel panel-default" style="margin-top: 10px;">
         <div class="panel-heading font-bold">
             最近文章
         </div>
         <div class="panel-body">
-            <article ng-repeat="doc in topic.newArticles" class="media">
-                <div class="pull-left">
-                    <img style="margin-bottom:5px" ng-src="{{topic.image}}">
-                </div>
-                <div class="media-body">
-                    <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title}}</a>
-                    <small class="block m-t-xs">摘要：{{doc.title}}</small>
-                    <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <span class="text-info">{{doc.source_name}}</span></span>
-                </div>
-                <div class="line b-b"></div>
-            </article>
+            <ul class="timeline">
+                <!-- 时间轴的头
+                <li class="tl-header">
+                    <div class="btn btn-sm btn-default btn-rounded">2014-10-24</div>
+                </li>
+                -->
+                <li ng-repeat="doc in topic.newArticles" class="tl-item tl-left">
+                    <div class="tl-wrap b-primary">
+                        <span class="tl-date" style="width: 5em;">{{doc.pubtime}}</span>
+                        <div class="tl-content panel padder b-a block">
+                            <span class="arrow left pull-up hidden-left"></span>
+                            <span class="arrow right pull-up visible-left"></span>
+                            <article class="media">
+                                <div class="pull-left">
+                                    <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.image}}">
+                                </div>
+                                <div class="media-body">
+                                    <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title | titleFilters}}</a>
+                                    <small class="block m-t-xs">摘要：{{doc.title | titleFilters}}</small>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </li>
+                <li class="tl-header">
+                    <div class="btn btn-sm btn-default btn-rounded">更多</div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

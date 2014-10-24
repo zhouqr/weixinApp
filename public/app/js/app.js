@@ -40,8 +40,13 @@ var app = angular.module('app', [
         app.value      = $provide.value;
 
         $urlRouterProvider
-            .otherwise('/app/dashboard-v1');
+            .otherwise('/weixin-login');
         $stateProvider
+            // others
+            .state('weixin-login', {
+                url: '/weixin-login',
+                templateUrl: 'tpl/weixin-login.html'
+            })
             .state('app', {
                 abstract: true,
                 url: '/app',

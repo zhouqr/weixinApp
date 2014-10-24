@@ -1,7 +1,7 @@
 <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
 <div class="col">
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">专题 — 整合信息，聚焦事件，让您对事件的发展一目了然</h1>
+  <h1 class="m-n font-thin h3 ">专题 <span class="m-n font-thin h5"> — 整合信息，聚焦事件，让您对事件的发展一目了然</span></h1>
 </div>
 
 <div ng-controller="TopicListCtrl">
@@ -16,16 +16,16 @@
         	<i class="glyphicon glyphicon-pencil"></i>
         </a>
         &nbsp;&nbsp;
-        <a href="#/" title="删除" style="margin-right:10px">
+        <a href="#/app/topics" title="删除" style="margin-right:10px">
         	<i class="glyphicon glyphicon-remove-circle"></i>
         </a>
       </div>
       <div class="clear">
-        <div><a href="#/app/topics-detail" class="text-md">{{topic.title}}</a><span class="label bg-danger m-l-sm">+{{topic.todayCount}}</span></div>
+        <div><a href="#/app/topics-detail" class="text-md">{{topic.title | titleFilters}}</a><span class="label bg-danger m-l-sm">+{{topic.todayCount}}</span></div>
         <div class="text-ellipsis m-t-xs">
         	<ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
         		<li ng-repeat="doc in topic.newArticles.slice(0,5)" style="padding:5px 0px">
-        			<span class="text-info">{{doc.pubtime}}</span>&nbsp;来自&nbsp;<span class="text-info ">{{doc.source_name}}</span>:&nbsp;<a href="{{doc.content_url}}" target="blank">{{doc.title | limitTo:23}}</a>
+        			<span class="text-info">{{doc.pubtime}}</span>&nbsp;来自&nbsp;<span class="text-info ">{{doc.source_name}}</span>:&nbsp;<a href="{{doc.content_url}}" target="blank">{{doc.title | limitTo:23 | titleFilters}}</a>
         		</li>
         	</ul>
         </div>

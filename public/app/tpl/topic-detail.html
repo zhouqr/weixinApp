@@ -1,23 +1,25 @@
-<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="TopicDetailCtrl">
+<div class="hbox hbox-auto-xs hbox-auto-sm ng-scope" ng-controller="TopicDetailCtrl"
+     xmlns="http://www.w3.org/1999/html">
   <div class="col">
     <div style="background:url(img/c4.jpg) center center; background-size:cover">
       <div class="wrapper-lg bg-white-opacity">
         <div class="row m-t">
-          <div class="col-sm-7">
+          <div class="col-sm-10">
             <a href class="thumb-lg pull-left m-r">
               <img src="img/a0.jpg" class="img-circle">
             </a>
             <div class="clear m-b">
               <div class="m-b m-t-sm">
-                <span class="h3 text-black">{{topic.title}}</span>
+                <span class="h3 text-black">{{topic.title | titleFilters}}</span>
               </div>
                <div class="m-b m-t-sm">
-                <span class="h5 text-black">创建日期：{{topic.date}}</span>
+                <span class="h5 text-black">创建日期：{{topic.date}}</span></br>
+                <span class="h5 text-black">关键词：烟台</span></br>
+                <span class="h5 text-black">专题简介：ENZO RODI贝朗安住隶属于德国百年卫浴企业Roman Dietsche集团，是比较亲们的一个卫浴品牌，留住你也偶尔有为大家推荐；这款采用了全铜电镀工艺，加厚防爆角阀。</span>
               </div>
-              
             </div>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-2">
             <div class="pull-right pull-none-xs text-center">
               <a href="#/" title="修改" class="m-b-md inline m">
         		<i class="glyphicon glyphicon-pencil"></i>
@@ -99,11 +101,11 @@
         <div class="panel-body">
           <article ng-repeat="doc in topic.newArticles" class="media">
             <div class="pull-left">
-                <img style="margin-bottom:5px" ng-src="{{topic.image}}">
+                <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.image}}">
             </div>
             <div class="media-body">                        
-              <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title}}</a>
-              <small class="block m-t-xs">摘要：{{doc.title}}</small>
+              <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title | titleFilters}}</a>
+              <small class="block m-t-xs">摘要：{{doc.title | titleFilters}}</small>
               <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <a href="#/app/weixin-detail" class="text-info">{{doc.source_name}}</a></span>
             </div>
             <div class="line b-b"></div>
@@ -111,9 +113,7 @@
         </div>
       </div>
   </div>
-  <div class="col w-lg bg-light lter b-l bg-auto">
-    <div class="wrapper">
+  <div class="col w-md bg-white-only b-l bg-auto no-border-xs">
 
-    </div>
   </div>
 </div>
