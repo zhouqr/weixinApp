@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
+#GET     /                                       staticDir:public/app
 GET     /app/                                   staticDir:public/app
 
 # Ignore favicon requests
