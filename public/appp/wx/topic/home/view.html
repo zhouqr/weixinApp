@@ -1,0 +1,35 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
+<div class="col">
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3 ">专题 <span class="m-n font-thin h5"> — 整合信息，聚焦事件，让您对事件的发展一目了然</span></h1>
+</div>
+<div ng-controller="TopicListCtrl">
+   <!-- list -->
+  <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
+    <li ng-repeat="topic in topics" class="list-group-item clearfix b-l-3x">
+      <span class=" pull-left m-r">
+        <img style="width:260px;height:180px" ng-src="{{topic.image || imgDeg}}">
+      </span>
+      <div class="pull-right text-muted" style="font-size:15px">
+        <a href="#/app/app-weixin-add-plugin" title="修改">
+          <i class="glyphicon glyphicon-pencil"></i>
+        </a>
+        &nbsp;&nbsp;
+        <a href="#/app/topics" title="删除" style="margin-right:10px">
+          <i class="glyphicon glyphicon-remove-circle"></i>
+        </a>
+      </div>
+      <div class="clear">
+        <div><a href="#/wx/topic/detail" class="text-md">{{topic.name | titleFilters}}</a><span class="label bg-danger m-l-sm">+{{topic.todayCount}}</span></div>
+              <list id = "topic.id"></list>
+      </div>      
+    </li>
+  </ul>
+  <!-- / list -->
+</div>
+
+</div>
+<div class="col w-md bg-white-only b-l bg-auto no-border-xs">
+</div>
+
+</div>

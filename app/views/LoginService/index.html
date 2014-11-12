@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN" >
+<head>
+    <meta charset="UTF-8">
+    <title>#{get 'title' /}</title>
+    <!--css 引入 -->
+    #{get 'css'/}
+    <!-- #{css ['main']/} -->
+    
+    <!-- js 引入 -->
+    #{css ['bootstrap','animate','font-awesome.min','simple-line-icons','font','app']/}
+    #{js ['jquery/jquery.min',
+          'angular/angular',
+          'angular/angular-animate',
+          'angular/angular-cookies',
+          'angular/angular-ui-router',
+          'angular/ngStorage',
+          'angular/ocLazyLoad',
+          'angular/ui-bootstrap-tpls',
+          'angular/angular-translate',
+          'angular/ui-jq',
+          'angular/ui-load',
+          'angular/ui-validate']/}
+    #{js ['directives','controllers','filters'] /}
+    %{appPath='/public/appp'}%
+    <script type="text/javascript">
+        var appPath = '${appPath}';
+    </script>
+</head>
+<body ng-controller="AppCtrl">
+
+<div class="modal-over bg-black" ng-controller = "LoginController">
+  <div class="modal-center animated fadeInUp text-center" style="width:200px;margin:-100px 0 0 -100px;">
+    <div class="thumb-lg">
+      <img src="public/img/a0.jpg" class="img-circle">
+    </div>
+    <p class="h4 m-t m-b">微情警务通</p>
+      <div class="list-group list-group-sm" >
+          <div class="list-group-item">
+              <input type="text" placeholder="用户名" class="form-control no-border ng-pristine ng-invalid ng-invalid-required " ng-model="user.username" required="">
+          </div>
+          <div class="list-group-item">
+              <input type="password" placeholder="密码" class="form-control no-border ng-pristine ng-invalid ng-invalid-required" ng-model="user.password" required="">
+          </div>
+      </div>
+      <a  class="btn btn-lg btn-primary btn-block" ng-click = "signin();">登录</a>
+  </div>
+</div>
+
+
+
+${appjs.raw()} *{自动加载app目录中所有js，仅开发模式}*
+<script type="text/javascript">
+    angular.bootstrap(document.body,['app'])
+</script>
+</body>
+</html>
+
+

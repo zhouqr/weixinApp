@@ -1,0 +1,41 @@
+#{extends 'main.html'/}
+
+*{在下面设置页面标题}*
+
+#{set 'title'} 微情警务通 #{/set}
+
+
+*{在下面设置页面所需css,文件放在/public/stylesheets目录中，文个件不需要写css扩展名}*
+
+#{set 'css'}
+    #{css ['bootstrap','animate','font-awesome.min','simple-line-icons','font','app']/}
+#{/set}
+
+#{doLayout /}
+
+*{在下面设置页面所需js,文件放在/public/libs目录中，文个件不需要写js扩展名}*
+
+
+#{set 'js'}
+    #{js ['jquery/jquery.min',
+          'angular/angular',
+          'angular/angular-animate',
+          'angular/angular-cookies',
+          'angular/angular-ui-router',
+          'angular/ngStorage',
+          'angular/ocLazyLoad',
+          'angular/ui-bootstrap-tpls',
+          'angular/angular-translate',
+          'angular/ui-jq',
+          'angular/ui-load',
+          'angular/ui-validate']/}
+#{/set}
+
+<!-- #{js ['ueditor/ueditor.config','ueditor/ueditor.all.min'] /} -->
+
+
+*{
+#{set 'js'}
+    #{lib ['zui/zui','zui/auth','zui/ueditor','zui/password-match'] /}
+#{/set}
+}*
