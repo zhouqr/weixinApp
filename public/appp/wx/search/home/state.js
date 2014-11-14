@@ -1,9 +1,9 @@
 
-angular.module('weixin.wx.search.home',[])
+angular.module('weixin.wx.search.home',['services.search','weixin.wx.topic.search.directives.search'])
     .config(function($stateProvider){
         $stateProvider
             .state('wx.search.home',{
-                url:'/home',
+                url:'/home/{keywords}',
                 templateUrl: appPath + '/wx/search/home/view.html',
                 controller:function($scope,$stateParams,$state){
                 	console.log("");
@@ -11,47 +11,50 @@ angular.module('weixin.wx.search.home',[])
             })
     })
     //获取微信检索数据
-  .controller('WeiXinSearchCtrl', ['$scope','$http', function($scope,$http) {
-	/*var path = appPath + '/wx/search/home/topics.json';
-    var topics = $http.get(path).then(function (resp) {
-        $scope.topic = resp.data.topics[0];
-        $scope.topic.date="2014-10-20 12:12:12";
-
-    });
-    //检索公众号
-    var weixins = $http.get(appPath + '/wx/search/home/weixin.json').then(function (resp) {
-        $scope.weixins = resp.data.weixins;
-
-    });*/
-	  $scope.imgDeg  = "public/img/topics/fang.jpg";
+  .controller('WeiXinSearchCtrl', ['$scope','$http','$stateParams','Search', function($scope,$http,$stateParams,Search) {
+	  $scope.searchKeywords = $stateParams.keywords
+	  $scope.imgDeg  = "public/img/topics/default.jpg";
 	  $scope.topics = [];
 	  $scope.weixins = [];
-	  $scope.search =function(){
-		  $http({
-			  method: 'GET',
-			  url: 'search/searchArticals',
-			  params:{
-				  keywords : $scope.keywords
-			  }
-		  }).success(function(data, status) {
-			 if(data.code == 200){
-				 $scope.topics = data.info;
-			 }
-		  });
+	  
+	  $scope.search = function(keywords){
 		  
-		  $http({
-			  method: 'GET',
-			  url: 'search/searchWxs',
-			  params:{
-				  keywords : $scope.keywords
+		  $scope.topicLoading = true;
+		  $scope.weixinLoading = true;
+		  Search.searchArtical(keywords==undefined?$scope.keywords:keywords).success(function(data){
+			  if(data.code == 200){
+				  $scope.topicLoading = false;
+				  $scope.topics = data.info.articals;
+				  $scope.topicsCount = data.info.total_articals;
+				  if ($scope.topics.length == 0) {
+						$scope.topic_no_data = true;
+				  }else{
+					    $scope.topic_no_data = false;
+				  }
+				  
 			  }
-		  }).success(function(data, status) {
-			 if(data.code == 200){
-				 $scope.weixins = data.info;
-			 }
-		  });
-		  
+          }).error(function(data){
+        	  $scope.topicLoading = false;
+        	  $scope.topic_no_data = true;
+          });
+          
+          Search.searchWxs(keywords==undefined?$scope.keywords:keywords).success(function(data){
+        	  if(data.code == 200){
+        		  $scope.weixinLoading = false;
+        		  $scope.weixins  = data.info.wxlist;
+        		  $scope.weixinsCount = data.info.total_num;
+        		  if ($scope.weixins.length == 0) {
+						$scope.weixin_no_data = true;
+				  }else{
+					    $scope.weixin_no_data = false;
+				  }
+			  }
+          }).error(function(data){
+        	  $scope.weixinLoading = false;
+        	  $scope.weixin_no_data = true;
+          });
 		  
 	   };
+	   $scope.search($scope.searchKeywords);
 	  
     }])

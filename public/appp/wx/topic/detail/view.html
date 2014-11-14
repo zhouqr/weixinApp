@@ -1,3 +1,8 @@
+<!-- <script src="public/libs/jquery/highcharts/highcharts.js"></script>
+<script src="public/libs/jquery/highcharts/modules/exporting.js"></script> -->
+
+
+
 <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope" ng-controller="TopicDetailCtrl"
      xmlns="http://www.w3.org/1999/html">
   <div class="col">
@@ -10,25 +15,23 @@
             </a>
             <div class="clear m-b">
               <div class="m-b m-t-sm">
-                <span class="h3 text-black">{{topic.title | titleFilters}}</span>
+                <span class="h3 text-black">{{topic.name | titleFilters}}</span>
               </div>
                <div class="m-b m-t-sm">
-                <span class="h5 text-black">创建日期：{{topic.date}}</span></br>
-                <span class="h5 text-black">关键词：烟台</span></br>
-                <span class="h5 text-black">专题简介：ENZO RODI贝朗安住隶属于德国百年卫浴企业Roman Dietsche集团，是比较亲们的一个卫浴品牌，留住你也偶尔有为大家推荐；这款
-
-采用了全铜电镀工艺，加厚防爆角阀。</span>
+                <span class="h5 text-black">创建日期：{{topic.createTime}}</span></br>
+                <span class="h5 text-black">关键词：{{topic.keywords}}</span></br>
+                <span class="h5 text-black">专题简介：{{topic.introduction}}</span>
               </div>
             </div>
           </div>
           <div class="col-sm-2">
             <div class="pull-right pull-none-xs text-center">
-              <a href="#/" title="修改" class="m-b-md inline m">
+              <a ui-sref="wx.topic.edit({id:topic.id})" title="修改" class="m-b-md inline m">
             <i class="glyphicon glyphicon-pencil"></i>
               </a>
-              <a href="#/" title="删除" class="m-b-md inline m">
+             <!--  <a href="#/" title="删除" class="m-b-md inline m">
             <i class="glyphicon glyphicon-remove-circle"></i>
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -41,38 +44,40 @@
           </div>
     </div>
 <!-- 图表-->
-    <div style="margin-top: 5px;">
+     <div style="margin-top: 5px;">
       <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
               <div class="panel panel-default">
-                  <div class="panel-heading font-bold">专题文章趋势</div>
-                  <div class="panel-body">
+                  <div class="panel-heading font-bold">
+                                              专题文章趋势
+                       <div class="btn-group pull-right">
+						                <label class="btn btn-primary btn-sm ng-valid ng-dirty" ng-model="radioModel" btn-radio="7" uncheckable="" ng-click = "topicFlot(7);">一个周</label>
+						                <label class="btn btn-primary btn-sm ng-valid ng-dirty" ng-model="radioModel" btn-radio="15" uncheckable="" ng-click = "topicFlot(15);">半个月</label>
+						                <label class="btn btn-primary btn-sm ng-valid ng-dirty active" ng-model="radioModel" btn-radio="30" uncheckable="" ng-click = "topicFlot(30);">一个月</label>
+                       </div>                      
+                                              
                   </div>
-              </div>
-          </div>
-          <div class="col-md-6">
-              <div class="panel panel-default">
-                  <div class="panel-heading font-bold">Multiple</div>
                   <div class="panel-body">
+                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                   </div>
               </div>
           </div>
       </div>
-    </div>
+    </div> 
 
     <div class="panel panel-default">
         <div class="panel-heading font-bold">
             最新文章列表
         </div>
         <div class="panel-body">
-          <article ng-repeat="doc in topic.newArticles" class="media">
+          <article ng-repeat="topic in topics" class="media">
             <div class="pull-left">
-                <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.image}}">
+                <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.image_url || imgDeg }}">
             </div>
             <div class="media-body">                        
-              <a href="{{doc.content_url}}" target="blank" class="h4">{{doc.title | titleFilters}}</a>
-              <small class="block m-t-xs">摘要：{{doc.title | titleFilters}}</small>
-              <span class="text-xs"><span class="text-info">{{doc.pubtime}}</span> 来自 <a href="#/app/weixin-detail" class="text-info">{{doc.source_name}}</a></span>
+              <a href="{{topic.content_url}}" target="_blank" class="h4">{{topic.title | titleFilters}}</a>
+              <small class="block m-t-xs">摘要：{{topic.content | titleFilters}}</small>
+              <span class="text-xs"><span class="text-info">{{topic.pubtime}}</span> 来自 <a  class="text-info">{{topic.source_name}}</a></span>
             </div>
             <div class="line b-b"></div>
           </article>

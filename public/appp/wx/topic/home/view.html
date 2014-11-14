@@ -1,3 +1,6 @@
+<script type="text/ng-template" id="myModalContent.html">
+            <div ng-include="'public/appp/wx/topic/home/modal.html'"></div>
+</script>
 <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
 <div class="col">
 <div class="bg-light lter b-b wrapper-md">
@@ -11,16 +14,17 @@
         <img style="width:260px;height:180px" ng-src="{{topic.image || imgDeg}}">
       </span>
       <div class="pull-right text-muted" style="font-size:15px">
-        <a href="#/app/app-weixin-add-plugin" title="修改">
+        <a ui-sref="wx.topic.edit({id:topic.id})" title="修改">
           <i class="glyphicon glyphicon-pencil"></i>
         </a>
         &nbsp;&nbsp;
-        <a href="#/app/topics" title="删除" style="margin-right:10px">
+        <a ng-click="open('sm',topic.id)" title="删除" style="margin-right:10px">
           <i class="glyphicon glyphicon-remove-circle"></i>
         </a>
       </div>
       <div class="clear">
-        <div><a href="#/wx/topic/detail" class="text-md">{{topic.name | titleFilters}}</a><span class="label bg-danger m-l-sm">+{{topic.todayCount}}</span></div>
+      
+        <div><a ui-sref="wx.topic.detail({id:topic.id})" class="text-md">{{topic.name | titleFilters}}</a><span class="label bg-danger m-l-sm">+{{topic.todayCount}}</span></div>
               <list id = "topic.id"></list>
       </div>      
     </li>

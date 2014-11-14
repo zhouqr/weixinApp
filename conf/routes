@@ -3,6 +3,9 @@
 # ~~~~
 
 # Home page
+GET      /login                                  LoginService.index
+GET      /                                       Application.index
+
 #GET     /                                       staticDir:public/app
 GET     /app/                                   staticDir:public/app
 
@@ -11,6 +14,49 @@ GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
+
+# login
+GET     /LoginService/login                         LoginService.login
+GET     /LoginService/logout                        LoginService.logout
+#获取当前登录用户
+GET     /LoginService/currentUser                   LoginService.getUser
+
+# Topic
+#添加专题
+POST    /Topic/addTopic                             Topic.addTopic
+
+#判断是否有重名专题
+POST    /Topic/hasSameTopic                         Topic.hasSameTopic
+
+#添加专题
+POST    /Topic/updateTopic                          Topic.updateTopic
+#删除专题
+GET     /Topic/delTopic                             Topic.delTopic
+#获取专题列表
+GET     /Topic/topicList                            Topic.topicList
+
+#获取专题数量
+GET     /Topic/topicCount                            Topic.topicCount
+
+#获取专题详情
+GET     /Topic/topicDetail                          Topic.topicDetail
+#获取专题最新5篇文章
+GET     /Topic/getTopicDocsTop5                     Topic.getTopicDocsTop5
+#获取专题文章，分页
+GET     /Topic/getTopicDocs                         Topic.getTopicDocs
+#获取专题文章数趋势分析
+GET     /Topic/docCountAnalysis                     Topic.getDayCount
+
+#search 检索
+#检索微信文章
+GET     /Search/articles                            Search.searchArticals
+
+#检索微信号
+GET     /Search/wxs                           		Search.searchWxs
+
+#获取微信详情
+GET     /Search/wxDetail                            Search.get_wx_openid
+
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

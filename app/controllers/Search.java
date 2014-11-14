@@ -3,6 +3,7 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import models.bean.ResultInfo;
@@ -36,6 +37,17 @@ public class Search extends BaseController{
 		String res_string = res.getString();
 		//转化为JSONObject
 		JSONObject obj = JSONObject.fromObject(res_string);
+		
+		JSONArray articals = obj.getJSONArray("articals");
+		
+		//处理imurl中的图片链接
+		for(int i=0;i<articals.size();i++){
+			JSONObject json = articals.getJSONObject(i);
+			String url = json.getString("imurl");
+			if(url.contains("url=http"))
+				json.put("imurl", url.substring(url.lastIndexOf("http")));
+		}
+		
 		/*字段
 		 * kewords 检索的关键词
 		 * total_articals 检索总数目，大约数目
@@ -49,6 +61,7 @@ public class Search extends BaseController{
 		 * sourcename 公众号昵称,
 		 *},
 		 */
+		
 		renderJSON(ResultInfo.success(obj));
 		
 	}

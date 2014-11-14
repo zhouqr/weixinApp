@@ -192,20 +192,14 @@ angular.module('weixin.controllers', ['pascalprecht.translate', 'ngCookies'])
       $scope.status.isopen = !$scope.status.isopen;
     };
   }])
-  .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function($scope, $modalInstance, items) {
+  /*.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function($scope, $modalInstance, items) {
     $scope.items = items;
     $scope.selected = {
       item: $scope.items[0]
     };
 
-    $scope.ok = function () {
-      $modalInstance.close($scope.selected.item);
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-  }])
+    
+  }])*/
   .controller('ModalDemoCtrl', ['$scope', '$modal', '$log', function($scope, $modal, $log) {
     $scope.items = ['item1', 'item2', 'item3'];
     $scope.open = function (size) {
@@ -310,7 +304,7 @@ angular.module('weixin.controllers', ['pascalprecht.translate', 'ngCookies'])
     $scope.selected = undefined;
     $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     // Any function returning a promise object can be used to load values asynchronously
-    $scope.getLocation = function(val) {
+    /*$scope.getLocation = function(val) {
       return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
         params: {
           address: val,
@@ -323,7 +317,7 @@ angular.module('weixin.controllers', ['pascalprecht.translate', 'ngCookies'])
         });
         return addresses;
       });
-    };
+    };*/
   }])
   .controller('DatepickerDemoCtrl', ['$scope', function($scope) {
     $scope.today = function() {
@@ -468,7 +462,6 @@ angular.module('weixin.controllers', ['pascalprecht.translate', 'ngCookies'])
       {latLng: [37.36, -122.03], name: 'Silicon Valley'}
     ];
   }])
-
   // signin controller
   .controller('SigninFormController', ['$scope', '$http', '$state', function($scope, $http, $state) {
     $scope.user = {};
@@ -513,7 +506,6 @@ angular.module('weixin.controllers', ['pascalprecht.translate', 'ngCookies'])
     $scope.user = {};
     $scope.signin = function() {
       // Try to create
-    	console.log($scope.user);
     	$http({method:'get',url:'/loginService/login',params:$scope.user})
     	.success(function(data){
       	  if(data.code == 401){

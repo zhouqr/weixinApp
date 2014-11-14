@@ -1,16 +1,14 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import controllers.init.JSFile;
+import play.mvc.Controller;
 
-import java.util.*;
+public class Application extends BaseController {
 
-import models.*;
-
-public class Application extends Controller {
-
-    public static void index() {
-        render();
-    }
+	 public static void index() {
+	        String appjs=JSFile.get("/public/appp");
+	        render(appjs);
+	        //renderText(JSFile.get("/public/app"));
+	 }
 
 }

@@ -1,5 +1,5 @@
 
-angular.module('weixin.wx.search.detail',[])
+angular.module('weixin.wx.search.detail',['services.search','weixin.wx.topic.search.directives.search'])
     .config(function($stateProvider){
         $stateProvider
             .state('wx.search.detail',{
@@ -10,20 +10,27 @@ angular.module('weixin.wx.search.detail',[])
                 }
             })
     })
-    .controller('WeiXinDetailCtrl', ['$scope','$http','$stateParams', function($scope,$http,$stateParams) {
-    			$scope.imgDeg  = "public/img/topics/fang.jpg";
+    .controller('WeiXinDetailCtrl', ['$scope','$http','$stateParams','Search', function($scope,$http,$stateParams,Search) {
+    			$scope.imgDeg  = "public/img/topics/default.jpg";
+    			$scope.topics = [];
     			$scope.list =function(){
-    				  $http({
-    					  method: 'GET',
-    					  url: 'search/get_wx_openid',
-    					  params:{
-    						  open_id : $stateParams.open_id
+    				$scope.topicLoading = true;
+    				Search.searchWxDetail($stateParams.open_id).success(function(data){
+    					  if(data.code == 200){
+    						  $scope.topicLoading = false;
+    						  $scope.topics = data.info;
+    						  if ($scope.topics.length == 0) {
+    								$scope.topic_no_data = true;
+    						  }else{
+    							    $scope.topic_no_data = false;
+    						  }
+    						  
     					  }
-    				  }).success(function(data, status) {
-    					 if(data.code == 200){
-    						 $scope.topics = data.info;
-    					 }
-    				  });
+    		          }).error(function(data){
+    		        	  $scope.topicLoading = false;
+    		        	  $scope.topic_no_data = true;
+    		          });
+    				
     			  };
     			  $scope.list();
         }])

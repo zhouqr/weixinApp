@@ -294,9 +294,15 @@ public class Topic extends Model{
             	String _source_name = resultSet.getString("source_name");
             	//文章发布时间
             	String _pubtime = resultSet.getString("pubtime");
+            	if(_pubtime.contains(".0")){
+            		_pubtime = _pubtime.substring(0, _pubtime.lastIndexOf(".0"));
+            	}
             	
             	//文章url
             	String _content_url = resultSet.getString("content_url");
+            	
+            	//图片
+            	String _image_url = resultSet.getString("cover_url");
             	
             	//文章类型  1文本消息             	2 图片消息            	3 图文消息 
             	String _news_type = resultSet.getString("news_type");
@@ -308,6 +314,7 @@ public class Topic extends Model{
             	jsonTmp.put("pubtime", _pubtime);
             	jsonTmp.put("content_url", _content_url);
             	jsonTmp.put("news_type", _news_type);
+            	jsonTmp.put("image_url", _image_url);
             	
             	//是否需要返回内容
             	if(getContent){

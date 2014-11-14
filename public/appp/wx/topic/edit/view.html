@@ -1,0 +1,106 @@
+<!--  <div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">新建专题</h1>
+</div> -->
+<script type="text/ng-template" id="previewContent.html">
+            <div ng-include="'public/appp/wx/topic/add/modal.html'"></div>
+</script>
+
+
+
+<div class="font-bold">
+      <!-- breadcrumb -->
+        <ul class="breadcrumb b-a">
+          <span>当前位置：</span>
+          <li><a href="#"><i class="fa fa-home"></i>专题</a></li>
+          <li><a href>修改专题</a></li>
+        </ul>
+      <!-- / breadcrumb -->
+</div>
+<div class="wrapper-md" ng-controller = "TopicEditCtrl">
+    <div class="panel panel-default" >
+         <div class="panel-heading font-bold">
+                  修改专题
+         </div>
+         <div class="panel-body">
+           <div id="errorinfo-common" class="alert ng-isolate-scope alert-danger alert-dismissable" style="display:none">
+                   <div ><span class="ng-binding ng-scope">修改失败</span></div>
+           </div>
+           <div id="errorinfo" class="alert ng-isolate-scope alert-danger alert-dismissable" style="display:none">
+                   <div ><span class="ng-binding ng-scope">{{errorinfo}}</span></div>
+           </div>
+           <div id="successinfo" class="alert ng-isolate-scope alert-success alert-dismissable" style="display:none">
+                   <div ><span class="ng-binding ng-scope">修改成功</span></div>
+           </div>
+           <form class="form-horizontal form-validation" name = "addForm">
+             <div class="form-group">
+               <label class="col-sm-2 control-label">专题名称：</label>
+               <div class="col-sm-7">
+                 <input type="text" class="form-control" ng-model="topic.name" placeholder="请输入专题名称" required ng-maxlength="20">
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-2 control-label">关键词：</label>
+               <div class="col-sm-7">
+                 <input type="text" class="form-control" ng-model="topic.keywords" placeholder="请输入关键词" required ng-maxlength="50">
+               </div>
+               <button type="button" class="btn btn-primary" ng-disabled="!topic.keywords" ng-click = "preview('lg',topic.keywords);" >预览</button>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-2 control-label">时间范围：</label>
+               <div class="col-sm-7" >
+                 <div class="row">
+                   <div class="col-md-6">
+                     <p class="input-group">
+                         <input type="text" id="d4311" class="form-control" placeholder="请选择开始时间" ng-model="topic.startTime"  onFocus="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'d4312\')||\'2020-10-01\'}'})"/> 
+                         <span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ><i class="glyphicon glyphicon-calendar"></i></button>
+                         </span>
+                     </p>
+                   </div>
+                   <div class="col-md-6">
+                     <p class="input-group" >
+                         <input type="text" id="d4312" class="form-control" placeholder="请选择结束时间" ng-model="topic.endTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01'})"/>
+                         <span class="input-group-btn">
+                           <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                         </span>
+                     </p>
+                   </div>
+                 </div>
+                 
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-2 control-label">简介：</label>
+               <div class="col-sm-7">
+                   <textarea class="form-control" rows="4" placeholder="请输入简介" ng-model="topic.introduction" required ng-maxlength="50"></textarea>
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             
+             <!-- <div class="form-group">
+               <label class="col-sm-2 control-label">图片：</label>
+               <div class="col-sm-7">
+                   <input ui-jq="filestyle" type="file" data-icon="false" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
+               </div>
+             </div> -->
+             
+             <!-- <div class="form-group has-error">
+                 <input ui-jq="filestyle" type="file" data-icon="false" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
+             </div> -->
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <div class="col-sm-4 col-sm-offset-2">
+                 <button type="button" class=" btn btn-primary" ng-disabled="addForm.$invalid" ng-click="editYes()">修改</button>
+                 <button type="button" class="btn btn-default" ng-click="reset()">重置</button>
+               </div>
+             </div>
+           </form>
+         </div>
+  </div>
+   
+</div>
+
+

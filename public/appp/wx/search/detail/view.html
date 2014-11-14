@@ -2,14 +2,9 @@
   <h1 class="m-n font-thin h3"><i class="icon-magnifier i-sm m-r-sm"></i> 搜索</h1>
 </div>
 <div class="wrapper-md"  ng-controller="WeiXinDetailCtrl">
-  <form action="#" class="m-b-md">
-    <div class="input-group">
-      <input type="text" class="form-control input-lg" placeholder="输入关键词">
-      <span class="input-group-btn">
-        <a href="#/app/weixin-search" class="btn btn-lg btn-default" type="button">搜索</a>
-      </span>
-    </div>
-  </form>
+
+  <search></search>
+  
   <article  class="media" style="border:1px solid #CCC;">
         <div class="pull-left">
             <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{topics.headim}}">
@@ -19,7 +14,7 @@
             <small class="block m-t-xs text-muted">微信号：{{topics.weixin_id}}</small>
             <small class="block m-t-xs">功能介绍：<span>{{topics.intro}}</span></small>
             <small class="block m-t-xs">微信认证：{{topics.verti}}</small>
-            <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small>
+            <!-- 详情页不要最近文章 <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small> -->
         </div>
   </article>
 
@@ -42,15 +37,19 @@
                             <span class="arrow right pull-up visible-left"></span>
                             <article class="media">
                                 <div class="pull-left">
-                                    <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{artical.image || imgDeg}}">
+                                    <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{artical.imurl || imgDeg}}">
                                 </div>
                                 <div class="media-body">
-                                    <a href="{{doc.content_url}}" target="blank" class="h4">{{artical.title | titleFilters}}</a>
+                                    <a href="{{artical.url}}" target="blank" class="h4">{{artical.title | titleFilters}}</a>
                                     <small class="block m-t-xs">摘要：{{artical.summary | titleFilters}}</small>
                                 </div>
                             </article>
                         </div>
                     </div>
+                </li>
+                <img  src = "public/img/loading.gif" ng-show = "topicLoading ">
+                <li  ng-show = "topic_no_data"> 
+                                   暂时木有数据！
                 </li>
                 <li class="tl-header">
                     <div class="btn btn-sm btn-default btn-rounded">更多</div>

@@ -35,15 +35,17 @@
       <img src="public/img/a0.jpg" class="img-circle">
     </div>
     <p class="h4 m-t m-b">微情警务通</p>
-      <div class="list-group list-group-sm" >
-          <div class="list-group-item">
-              <input type="text" placeholder="用户名" class="form-control no-border ng-pristine ng-invalid ng-invalid-required " ng-model="user.username" required="">
-          </div>
-          <div class="list-group-item">
-              <input type="password" placeholder="密码" class="form-control no-border ng-pristine ng-invalid ng-invalid-required" ng-model="user.password" required="">
-          </div>
-      </div>
-      <a  class="btn btn-lg btn-primary btn-block" ng-click = "signin();">登录</a>
+     <form name = "login" ng-submit ="signin();">
+			    <div class="list-group list-group-sm" >
+			    <div class="list-group-item">
+			        <input type="text" name = "user.username" placeholder="用户名" class="form-control no-border ng-pristine ng-invalid ng-invalid-required " ng-model="user.username" >
+			    </div>
+			    <div class="list-group-item">
+			        <input type="password" name = "user.password" placeholder="密码" class="form-control no-border ng-pristine ng-invalid ng-invalid-required" ng-model="user.password" >
+			    </div>
+			    </div>
+			    <button  class="btn btn-lg btn-primary btn-block" type="submit" >登录</button>
+     </form>
   </div>
 </div>
 

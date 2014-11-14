@@ -3,6 +3,8 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import play.data.validation.Required;
 import play.libs.Crypto;
 
@@ -53,5 +55,16 @@ public class LoginService extends BaseController{
 	        session.remove("username");
 	        session.remove("userid");
 	        renderJSON(ResultInfo.success());
+	    }
+	    
+	    /**
+	     * 获取当前用户
+	     */
+	    public static void getUser(){
+	    	User user = BaseController.currentUser();
+	    	JSONObject obj = new JSONObject();
+	    	obj.put("id",user.id);
+	    	obj.put("username", user.username);
+	    	renderJSON(ResultInfo.success(obj));
 	    }
 }

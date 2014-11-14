@@ -1,0 +1,23 @@
+
+<form action="#" class="m-b-md" ng-hide = "header">
+    <div class="input-group">
+      <input type="text" class="form-control input-lg" ng-model = "keywords" placeholder="输入关键词">
+      <span class="input-group-btn">
+        <!-- <button class="btn btn-lg btn-default" type="button" ng-click = "search();">搜索</button> -->
+        <a ui-sref="wx.search.home({keywords:keywords})" class="btn btn-lg btn-default">搜索</a>
+      </span>
+    </div>
+</form>
+{{}}
+
+<form ng-show = "header" class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="查找微信号或文章">
+          <span class="input-group-btn">
+            <!-- <a href="#/wx/search/home" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></a> -->
+            <a ui-sref="wx.search.home({keywords:selected})" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></a>
+          </span>
+        </div>
+      </div>
+</form>

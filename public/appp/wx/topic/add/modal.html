@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h3 class="modal-title">关键词检索信息</h3>
+</div>
+<div class="modal-body">
+    <article ng-repeat="topic in topics" class="media" ng-show = "topics.length > 0">
+            <div class="pull-left">
+                <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.imurl || imgDeg}}">
+            </div>
+            <div class="media-body">
+                <a href="{{topic.url}}" target="blank" class="h4">{{topic.title | titleFilters}}</a>
+                <small class="block m-t-xs">摘要：{{topic.summary| titleFilters}}</small>
+                <span class="text-xs"><span class="text-info">{{topic.pubtime}}</span> 来自 <a  class="text-info">{{topic.sourcename}}</a></span>
+            </div>
+            <div class="line b-b"></div>
+    </article>
+</div>
+<div class="modal-footer">                  
+    <button class="btn btn-primary" ng-click="cancel()">确定</button>
+</div>
