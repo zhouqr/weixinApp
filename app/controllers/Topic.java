@@ -85,8 +85,8 @@ public class Topic extends BaseController{
 	/**
 	 * 获取当前用户的专题列表
 	 */
-	public static void topicList(){
-		List<models.Topic> topics = models.Topic.topicList();
+	public static void topicList(@Required @Min(1)int page,@Required @Min(1)int pageSize){
+		List<models.Topic> topics = models.Topic.topicList(page,pageSize);
 		renderJSON(ResultInfo.success(topics));
 	}
 	

@@ -17,6 +17,7 @@ import net.sf.json.JSONObject;
 import controllers.BaseController;
 
 import play.Logger;
+import play.data.validation.Min;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 import util.DBUtil;
@@ -158,9 +159,9 @@ public class Topic extends Model{
 	 * 获取用户专题
 	 * @return
 	 */
-	public static List<Topic> topicList(){
+	public static List<Topic> topicList(int page,int pageSize){
 		User user = BaseController.currentUser();
-		List<Topic> topics = Topic.find("delete_flag=0 and user_id=?", user.id).fetch();
+		List<Topic> topics = Topic.find("delete_flag=0 and user_id=?", user.id).fetch(page, pageSize);
 		for(Topic topic:topics){
 			topic.todayCount = countTodayDocs(topic.keywords);
 		}

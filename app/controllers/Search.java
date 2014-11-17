@@ -6,6 +6,8 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import models.AttrWeixinPerson;
+import models.User;
 import models.bean.ResultInfo;
 
 import play.data.validation.Required;
@@ -105,7 +107,8 @@ public class Search extends BaseController{
 	 * 根据关键词搜索公众号
 	 * @param keywords
 	 */
-	public static void get_wx_openid(String open_id){
+	public static void get_wx_openid(@Required String open_id){
+		open_id = open_id.trim();
 		//取文章接口
 		String search_url= DBUtil.rb.getString("search_wx_detail.url");
 		
@@ -126,6 +129,17 @@ public class Search extends BaseController{
 		 * total_articals 文章总数
 		 * arcticals 文章列表，结构同article{},
 		 */
+		User user = BaseController.currentUser();
+		//是否已关注
+		AttrWeixinPerson person = AttrWeixinPerson.find("open_id=? and user_id=?", open_id, user.id).first();
+		if(person!=null){
+			obj.put("isAttr", true);
+		}else{
+			obj.put("isAttr", false);
+		}
+		//关注和取消关注参数
+		obj.put("open_id", open_id);
+		
 		renderJSON(ResultInfo.success(obj));
 		
 	}

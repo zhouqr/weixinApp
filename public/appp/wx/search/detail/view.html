@@ -10,10 +10,18 @@
             <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{topics.headim}}">
         </div>
         <div class="media-body">
-            <span class="h4">{{topics.sourcename}}</span>
+            <span class="h4">
+                {{topics.sourcename}}
+                <label class="i-switch m-t-xs m-r pull-right">
+		                <input type="checkbox"  ng-model="topics.isAttr" ng-click = "isAttrWx();">
+		                <i></i>
+                </label>  
+                <span class = "pull-right h5">是否关注：</span>
+            </span>
             <small class="block m-t-xs text-muted">微信号：{{topics.weixin_id}}</small>
             <small class="block m-t-xs">功能介绍：<span>{{topics.intro}}</span></small>
             <small class="block m-t-xs">微信认证：{{topics.verti}}</small>
+            
             <!-- 详情页不要最近文章 <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small> -->
         </div>
   </article>

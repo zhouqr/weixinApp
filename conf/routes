@@ -57,6 +57,14 @@ GET     /Search/wxs                           		Search.searchWxs
 #获取微信详情
 GET     /Search/wxDetail                            Search.get_wx_openid
 
+#关注微信公众号
+GET     /AttrWeixin/attr                            AttrWeixin.attr
+
+#取消关注微信公众号
+GET     /AttrWeixin/cancelAttr                      AttrWeixin.cancelAttr
+
+#获取关注微信公众号列表
+GET     /AttrWeixin/attrList                        AttrWeixin.getAttrList
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
