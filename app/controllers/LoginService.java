@@ -30,7 +30,7 @@ public class LoginService extends BaseController{
 	 * 登入
 	 * @param body
 	 */
-	 public static void login( String username, String password){
+	 public static void login(@Required String username,@Required String password){
 
 	        User user=User.find("username=?",username).first();
 	        

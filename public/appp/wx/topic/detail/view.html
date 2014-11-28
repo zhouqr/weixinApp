@@ -15,12 +15,12 @@
             </a>
             <div class="clear m-b">
               <div class="m-b m-t-sm">
-                <span class="h3 text-black">{{topic.name | titleFilters}}</span>
+                <span class="h3 text-black">{{(topic.name | titleFilters) || '暂时没有数据!'}}</span>
               </div>
                <div class="m-b m-t-sm">
-                <span class="h5 text-black">创建日期：{{topic.createTime}}</span></br>
-                <span class="h5 text-black">关键词：{{topic.keywords}}</span></br>
-                <span class="h5 text-black">专题简介：{{topic.introduction}}</span>
+                <span class="h5 text-black">创建日期：{{topic.createTime || '暂时没有数据!'}}</span></br>
+                <span class="h5 text-black">关键词：{{topic.keywords || '暂时没有数据!'}}</span></br>
+                <span class="h5 text-black">专题简介：{{topic.introduction || '暂时没有数据!'}}</span>
               </div>
             </div>
           </div>
@@ -29,36 +29,44 @@
               <a ui-sref="wx.topic.edit({id:topic.id})" title="修改" class="m-b-md inline m">
             <i class="glyphicon glyphicon-pencil"></i>
               </a>
-             <!--  <a href="#/" title="删除" class="m-b-md inline m">
-            <i class="glyphicon glyphicon-remove-circle"></i>
-              </a> -->
             </div>
           </div>
         </div>
       </div>
     </div>
       <!-- 配置图表-->
-     <div class="panel panel-default" style="margin-top: 5px;">
+    <!--  <div class="panel panel-default" style="margin-top: 5px;">
           <div class="panel-heading" style="text-align:right">
               <a href="#/app/app-weixin-add-plugin" class="btn m-b-xs w-xs btn-default btn-rounded">配置插件</a>
           </div>
-    </div>
+    </div> -->
 <!-- 图表-->
      <div style="margin-top: 5px;">
       <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-8">
               <div class="panel panel-default">
                   <div class="panel-heading font-bold">
                                               专题文章趋势
                        <div class="btn-group pull-right">
-						                <label class="btn btn-primary btn-sm ng-valid ng-dirty" ng-model="radioModel" btn-radio="7" uncheckable="" ng-click = "topicFlot(7);">一个周</label>
-						                <label class="btn btn-primary btn-sm ng-valid ng-dirty" ng-model="radioModel" btn-radio="15" uncheckable="" ng-click = "topicFlot(15);">半个月</label>
-						                <label class="btn btn-primary btn-sm ng-valid ng-dirty active" ng-model="radioModel" btn-radio="30" uncheckable="" ng-click = "topicFlot(30);">一个月</label>
+						                <label class="btn btn-primary btn-sm ng-valid ng-dirty" ng-model="radioModel" btn-radio="7" uncheckable="" ng-click = "topicLine(7);">一个周</label>
+						                <label class="btn btn-primary btn-sm ng-valid ng-dirty" ng-model="radioModel" btn-radio="15" uncheckable="" ng-click = "topicLine(15);">半个月</label>
+						                <label class="btn btn-primary btn-sm ng-valid ng-dirty active" ng-model="radioModel" btn-radio="30" uncheckable="" ng-click = "topicLine(30);">一个月</label>
                        </div>                      
-                                              
                   </div>
                   <div class="panel-body">
-                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        <img  src = "public/img/loading.gif" id="lineContainerLoading" /> 
+                        <div  id="lineContainer" style="height: 300px;"></div> 
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="panel panel-default">
+                  <div class="panel-heading font-bold">
+                                              热点关注分布图
+                  </div>
+                  <div class="panel-body">
+                        <img  src = "public/img/loading.gif" id="pieContainerLoading"/>
+                        <div id="pieContainer" style=" height: 300px; margin: 0 auto"></div>
                   </div>
               </div>
           </div>
@@ -75,16 +83,23 @@
                 <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.image_url || imgDeg }}">
             </div>
             <div class="media-body">                        
-              <a href="{{topic.content_url}}" target="_blank" class="h4">{{topic.title | titleFilters}}</a>
+              <a href="{{topic.content_url}}" target="_blank" class="h4"><message>{{topic.title | titleFilters}}</message></a>
               <small class="block m-t-xs">摘要：{{topic.content | titleFilters}}</small>
-              <span class="text-xs"><span class="text-info">{{topic.pubtime}}</span> 来自 <a  class="text-info">{{topic.source_name}}</a></span>
+              <span class="text-xs"><span class="text-info">{{topic.pubtime}}</span> 来自 <a ui-sref="wx.search.detail({open_id:topic.open_id})" class="text-info">{{topic.source_name}}</a></span>
             </div>
             <div class="line b-b"></div>
           </article>
+          <p ng-show = "topicLoading">
+            <img  src = "public/img/loading.gif" />
+          </p>
+          <p  ng-show = "topic_no_data"> 
+                           暂时木有数据！
+          </p>
+          <pagination ng-hide = "topic_no_data"  total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm m-t-sm m-b pull-right" boundary-links="true"></pagination> 
         </div>
       </div>
   </div>
-  <div class="col w-md bg-white-only b-l bg-auto no-border-xs">
+  <div class="col w-xxs bg-white-only b-l bg-auto no-border-xs">
 
   </div>
 </div>

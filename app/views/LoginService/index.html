@@ -2,7 +2,7 @@
 <html lang="zh-CN" >
 <head>
     <meta charset="UTF-8">
-    <title>#{get 'title' /}</title>
+    <title>微情聚焦 </title>
     <!--css 引入 -->
     #{get 'css'/}
     <!-- #{css ['main']/} -->
@@ -27,14 +27,14 @@
         var appPath = '${appPath}';
     </script>
 </head>
-<body ng-controller="AppCtrl">
+<body >
 
 <div class="modal-over bg-black" ng-controller = "LoginController">
   <div class="modal-center animated fadeInUp text-center" style="width:200px;margin:-100px 0 0 -100px;">
     <div class="thumb-lg">
-      <img src="public/img/a0.jpg" class="img-circle">
+      <img src="public/img/head.png" class="img-circle">
     </div>
-    <p class="h4 m-t m-b">微情警务通</p>
+    <p class="h4 m-t m-b"> 微情聚焦 </p>
      <form name = "login" ng-submit ="signin();">
 			    <div class="list-group list-group-sm" >
 			    <div class="list-group-item">
@@ -53,7 +53,7 @@
 
 ${appjs.raw()} *{自动加载app目录中所有js，仅开发模式}*
 <script type="text/javascript">
-    angular.bootstrap(document.body,['app'])
+     angular.bootstrap(document.body,['app'])
 </script>
 </body>
 </html>

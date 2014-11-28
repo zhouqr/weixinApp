@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,8 @@ import net.sf.json.JSONObject;
 import controllers.BaseController;
 
 import play.Logger;
+import play.Play;
+import play.cache.Cache;
 import play.data.validation.Min;
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -161,7 +164,7 @@ public class Topic extends Model{
 	 */
 	public static List<Topic> topicList(int page,int pageSize){
 		User user = BaseController.currentUser();
-		List<Topic> topics = Topic.find("delete_flag=0 and user_id=?", user.id).fetch(page, pageSize);
+		List<Topic> topics = Topic.find("delete_flag=0 and user_id=? order by id desc", user.id).fetch(page, pageSize);
 		for(Topic topic:topics){
 			topic.todayCount = countTodayDocs(topic.keywords);
 		}
@@ -174,6 +177,12 @@ public class Topic extends Model{
 	 * @return
 	 */
 	public static Long countTodayDocs(String keywords){
+		//缓存取数据
+		String key = String.format("/topic/countTodayDocs?keywords=%s", keywords);
+		Logger.info(key+"---"+Cache.get(key));
+		if(Cache.get(key)!=null)
+			return (Long)Cache.get(key);
+		
 		Long todayCount = 0l;
 		
 		//开始时间
@@ -186,8 +195,8 @@ public class Topic extends Model{
 		conn = DBUtil.getWeixinDBConn();  
         String sql_count = "";
         sql_count = " SELECT count(1) AS num" +
-					" FROM yqpt_weixin_news_info_sphinxse AS dse" +
-					" LEFT JOIN yqpt_weixin_news_info AS d USING(news_id) " +
+					" FROM yqpt_weixin_news_info_sg_sphinxse AS dse" +
+					" LEFT JOIN yqpt_weixin_news_info_sg AS d USING(news_id) " +
         			" WHERE query='" + keywords +
 					" ;range=pubtime,"+st.getTime()/1000+","+et.getTime()/1000+";mode=boolean;maxmatches=3200;offset=0;limit=3200;'";
         try {
@@ -204,7 +213,11 @@ public class Topic extends Model{
 		}finally{
 			DBUtil.closeConn(conn);
 		}
+		
 		Logger.info(sql_count+"--统计专题今日数据量:"+todayCount);
+		
+		//存入缓存
+		Cache.set(key, todayCount, Play.configuration.getProperty("todayCountCacheTime"));
 		return todayCount;
 	}
 	
@@ -215,6 +228,12 @@ public class Topic extends Model{
 	 * @return
 	 */
 	public static Long countDocs(String date,String keywords){
+		//如果有缓存
+		String key = String.format("/topic/countDocs?date=%s&keywords=%s", date,keywords);
+		Logger.info(key+"---"+Cache.get(key));
+		if(Cache.get(key)!=null)
+			return (Long)Cache.get(key);
+		
 		Long count = 0l;
 		
 		//开始时间
@@ -227,8 +246,8 @@ public class Topic extends Model{
 		conn = DBUtil.getWeixinDBConn();  
         String sql_count = "";
         sql_count = " SELECT count(1) AS num" +
-					" FROM yqpt_weixin_news_info_sphinxse AS dse" +
-					" LEFT JOIN yqpt_weixin_news_info AS d USING(news_id) " +
+					" FROM yqpt_weixin_news_info_sg_sphinxse AS dse" +
+					" LEFT JOIN yqpt_weixin_news_info_sg AS d USING(news_id) " +
         			" WHERE query='" + keywords +
 					" ;range=pubtime,"+st.getTime()/1000+","+et.getTime()/1000+";mode=boolean;maxmatches=3200;offset=0;limit=3200;'";
         try {
@@ -246,7 +265,59 @@ public class Topic extends Model{
 			DBUtil.closeConn(conn);
 		}
 		Logger.info(sql_count+"--统计专题"+date+"数据量:"+count);
+		
+		Cache.set(key, count, Play.configuration.getProperty("countCacheTime"));
 		return count;
+	}
+	
+	/**
+	 * 统计专题的数据量
+	 * @return
+	 */
+	public static Long countTopicDocs(Long id){
+		//先取缓存数据
+		String key = String.format("/topic/countTopicDocs?id=%d", id);
+		Logger.info(key+"---"+Cache.get(key));
+		if(Cache.get(key)!=null)
+			return (Long)Cache.get(key);
+		
+		Topic topic = Topic.findById(id);
+		String keywords = topic.keywords;
+		
+		// 指定记录
+    	Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        Long count = 0l;
+
+        try {
+        	        	
+            conn = DBUtil.getWeixinDBConn();  
+            
+            //获取数据列表
+            String sql = "";
+            sql = " SELECT count(1) AS num" +
+					" FROM yqpt_weixin_news_info_sg_sphinxse AS dse" +
+					" LEFT JOIN yqpt_weixin_news_info_sg AS d USING(news_id) " +
+        			" WHERE query='" + keywords +
+					" ;mode=boolean;maxmatches=3200;limit=3200;'"; 
+          
+            stmt = conn.prepareStatement(sql);
+            resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+	        	count = resultSet.getLong("num");
+	        }
+            resultSet.close();
+            stmt.close(); 
+        } catch (Exception e) {
+        	Logger.error("Result CheckUserInfoODBC:"+e.getMessage());
+        } finally {
+        	DBUtil.closeConn(conn);
+        }
+        //缓存count
+        Cache.set(key, count, Play.configuration.getProperty("countCacheTime"));
+        
+        return count;
 	}
 	
 	/**
@@ -274,8 +345,8 @@ public class Topic extends Model{
             //获取数据列表
             String sql = "";
             sql = " SELECT *" +
-					" FROM yqpt_weixin_news_info_sphinxse AS dse" +
-					" LEFT JOIN yqpt_weixin_news_info AS d USING(news_id) " +
+					" FROM yqpt_weixin_news_info_sg_sphinxse AS dse" +
+					" LEFT JOIN yqpt_weixin_news_info_sg AS d USING(news_id) " +
         			" WHERE query='" + keywords +
 					" ;sort=attr_desc:pubtime;mode=boolean;maxmatches=3200;offset="+st+";limit="+page_num+";'"; 
           
@@ -290,7 +361,7 @@ public class Topic extends Model{
             	//微信文章标题
             	String _title = resultSet.getString("title");
             	//微信用户id
-            	String _source_id = resultSet.getString("source_id");
+            	String _open_id = resultSet.getString("open_id");
             	//微信用户昵称
             	String _source_name = resultSet.getString("source_name");
             	//文章发布时间
@@ -299,18 +370,19 @@ public class Topic extends Model{
             		_pubtime = _pubtime.substring(0, _pubtime.lastIndexOf(".0"));
             	}
             	
-            	//文章url
+            	//文章url 
             	String _content_url = resultSet.getString("content_url");
             	
             	//图片
-            	String _image_url = resultSet.getString("cover_url");
-            	
+            	String _image_url = resultSet.getString("imurl");
+            	if(_image_url.contains("url=http"))
+            		_image_url = _image_url.substring(_image_url.lastIndexOf("http"));
             	//文章类型  1文本消息             	2 图片消息            	3 图文消息 
             	String _news_type = resultSet.getString("news_type");
 
             	jsonTmp.put("news_id", _news_id);
             	jsonTmp.put("title", _title);
-            	jsonTmp.put("source_id", _source_id);
+            	jsonTmp.put("open_id", _open_id);
             	jsonTmp.put("source_name", _source_name);
             	jsonTmp.put("pubtime", _pubtime);
             	jsonTmp.put("content_url", _content_url);
@@ -319,8 +391,8 @@ public class Topic extends Model{
             	
             	//是否需要返回内容
             	if(getContent){
-	            	//微信文章内容,截取100字
-	            	String _content = resultSet.getString("content");
+	            	//微信文章内容,截取100字  content，已有摘要字段
+	            	String _content = resultSet.getString("summary");
 	            	if(_content.length()>100){
 	            		_content = _content.substring(0, 100)+"...";
 	            	}
@@ -337,6 +409,70 @@ public class Topic extends Model{
         }
         
         return jarrArtical;
+	}
+	
+	
+	/**
+	 * 获取信息列表
+	 * @param keywords
+	 * @param page
+	 * @param pageSize
+	 */
+	public static List<Object> getTopicTopPerson(Long id, int num){
+		//先取缓存数据
+		String key = String.format("/topic/getTopicTopPerson?id=%d&num=%d", id,num);
+		Logger.info(key+"---"+Cache.get(key));
+		if(Cache.get(key)!=null)
+			return (List<Object>)Cache.get(key);
+		
+		Topic topic = Topic.findById(id);
+		String keywords = topic.keywords;
+		
+		// 指定记录
+    	Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        List<Object> jarrPerson = new ArrayList<Object>();
+
+        try {
+        	
+            conn = DBUtil.getWeixinDBConn();  
+            
+            //获取数据列表
+            String sql = "";
+            sql = " SELECT * FROM ("+
+					" SELECT a.open_id,a.source_name, COUNT(1) AS num FROM( "+
+					" SELECT open_id, source_name"+
+					" FROM yqpt_weixin_news_info_sg_sphinxse AS dse"+
+					" LEFT JOIN yqpt_weixin_news_info_sg AS d USING(news_id)"+ 
+					" WHERE query='"+keywords+";sort=attr_desc:pubtime;mode=boolean;maxmatches=3200;offset=0;limit=3200;'"+
+					") a GROUP BY a.open_id"+
+					") b ORDER BY b.num DESC LIMIT 0,"+num; 
+          
+            stmt = conn.prepareStatement(sql);
+            resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+            	List<Object> obj = new ArrayList<Object>();
+            	//微信用户昵称
+            	String _source_name = resultSet.getString("source_name");
+            	//文章发布时间
+            	Long count  = resultSet.getLong("num");
+            	obj.add(_source_name);
+            	obj.add(count);
+            	jarrPerson.add(obj);
+            }
+            resultSet.close();
+            stmt.close(); 
+        } catch (Exception e) {
+        	Logger.error("Result CheckUserInfoODBC:"+e.getMessage());
+        } finally {
+        	DBUtil.closeConn(conn);
+        }
+        
+      //缓存count
+        Cache.set(key, jarrPerson, Play.configuration.getProperty("countCacheTime"));
+        
+        return jarrPerson;
 	}
 
 }

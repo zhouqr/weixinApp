@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import play.data.validation.Min;
 import play.data.validation.Required;
 import models.AttrWeixinPerson;
@@ -20,7 +22,7 @@ public class AttrWeixin extends BaseController{
 	 * @param open_id
 	 * @param sourcename
 	 */
-	public static void attr(@Required String open_id,@Required String sourcename,String headim){
+	public static void attr(@Required String open_id,@Required String sourcename,String headim,String intro){
 		User user = BaseController.currentUser();
 		AttrWeixinPerson  person = AttrWeixinPerson.find("open_id=? and user_id=? and delete_flag=0", open_id.trim(),user.id).first();
 		//判断是否已关注
@@ -32,6 +34,7 @@ public class AttrWeixin extends BaseController{
 		person.sourcename = sourcename.trim();
 		person.headim = headim;
 		person.user_id = user.id;
+		person.intro = intro;
 		if(person.save().isPersistent())
 			renderJSON(ResultInfo.success());
 		else
@@ -42,7 +45,7 @@ public class AttrWeixin extends BaseController{
 	 * 取消关注
 	 * @param open_id
 	 */
-	public static void cancelAttr(String open_id){
+	public static void cancelAttr(@Required String open_id){
 		User user = BaseController.currentUser();
 		AttrWeixinPerson  person = AttrWeixinPerson.find("open_id=? and user_id=? and delete_flag=0", open_id.trim(),user.id).first();
 		if(person==null)
@@ -62,7 +65,14 @@ public class AttrWeixin extends BaseController{
 	 */
 	public static void getAttrList(@Required @Min(1)int page,@Required @Min(1)int pageSize){
 		User user = BaseController.currentUser();
-		List<AttrWeixinPerson> persons = AttrWeixinPerson.find("delete_flag=0 and user_id=?", user.id).fetch(page, pageSize);
-		renderJSON(ResultInfo.success(persons));
+		//获取关注微信号列表
+		List<AttrWeixinPerson> persons = AttrWeixinPerson.find("delete_flag=0 and user_id=? order by id desc", user.id).fetch(page, pageSize);
+		//统计总页数
+		Long count = AttrWeixinPerson.count("delete_flag=0 and user_id=?", user.id);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("bigTotalItems", count);
+		obj.put("weixinPersons", persons);
+		renderJSON(ResultInfo.success(obj));
 	}
 }

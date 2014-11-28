@@ -7,7 +7,7 @@
                 <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.imurl || imgDeg}}">
             </div>
             <div class="media-body">
-                <a href="{{topic.url}}" target="blank" class="h4">{{topic.title | titleFilters}}</a>
+                <a href="{{topic.url}}" target="blank" class="h4"><message>{{topic.title | titleFilters}}</message></a>
                 <small class="block m-t-xs">摘要：{{topic.summary| titleFilters}}</small>
                 <span class="text-xs"><span class="text-info">{{topic.pubtime}}</span> 来自 <a  class="text-info">{{topic.sourcename}}</a></span>
             </div>

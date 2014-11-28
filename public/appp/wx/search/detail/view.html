@@ -3,30 +3,65 @@
 </div>
 <div class="wrapper-md"  ng-controller="WeiXinDetailCtrl">
 
-  <search></search>
+  <!-- <search></search> -->
+  <form action="#" class="m-b-md" >
+    <div class="input-group">
+      <div class="input-group-btn dropdown">
+          
+          <button id="search"  type="button" class="btn btn-lg btn-default" tabindex="-1" ng-click = "search()">搜索</button>
+          <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+          <ul class="dropdown-menu" style ="width:300px;" ng-click="toggleDropdown($event)">
+              <div class="panel panel-default">
+						        <div class="panel-heading">
+						                        搜索条件          
+						        </div>
+						        <table class="table ">
+						          <tbody>
+						            <tr>
+						              <td><input type="text" id="d4311" class="form-control" placeholder="请选择开始时间" ng-model="startTime"  onFocus="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'d4312\')||\'2020-10-01\'}'})"/> </td>
+						            </tr>
+						            <tr>
+						              <td><input type="text" id="d4312" class="form-control" placeholder="请选择结束时间" ng-model="endTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01'})"/> </td>
+						            </tr>
+						          </tbody>
+						        </table>
+              </div>
+          </ul>
+      </div>
+      <input type="text" class="form-control input-lg" ng-model = "keywords" placeholder="输入关键词">
+      <span class="input-group-btn">
+        <!-- <button class="btn btn-lg btn-default" type="button" ng-click = "search();">搜索</button> -->
+        
+        
+        <!-- <a id="search"  ui-sref="wx.search.home({keywords:keywords})" class="btn btn-lg btn-default">搜索</a> -->
+      </span>
+    </div>
+  </form>
+  
+
+  
   
   <article  class="media" style="border:1px solid #CCC;">
         <div class="pull-left">
-            <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{topics.headim}}">
+            <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{wxinfo.headim}}">
         </div>
         <div class="media-body">
             <span class="h4">
-                {{topics.sourcename}}
+                {{wxinfo.sourcename}}
                 <label class="i-switch m-t-xs m-r pull-right">
-		                <input type="checkbox"  ng-model="topics.isAttr" ng-click = "isAttrWx();">
+		                <input type="checkbox"  ng-model="wxinfo.isAttr" ng-click = "isAttrWx();">
 		                <i></i>
                 </label>  
                 <span class = "pull-right h5">是否关注：</span>
             </span>
-            <small class="block m-t-xs text-muted">微信号：{{topics.weixin_id}}</small>
-            <small class="block m-t-xs">功能介绍：<span>{{topics.intro}}</span></small>
-            <small class="block m-t-xs">微信认证：{{topics.verti}}</small>
+            <small class="block m-t-xs text-muted">微信号：{{wxinfo.weixin_id}}</small>
+            <small class="block m-t-xs">功能介绍：<span>{{wxinfo.intro}}</span></small>
+            <small class="block m-t-xs">微信认证：{{wxinfo.verti}}</small>
             
             <!-- 详情页不要最近文章 <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small> -->
         </div>
   </article>
-
-    <div class="panel panel-default" style="margin-top: 10px;">
+  <div class="panel panel-default" style="margin-top: 10px;">
         <div class="panel-heading font-bold">
             最近文章
         </div>
@@ -37,7 +72,7 @@
                     <div class="btn btn-sm btn-default btn-rounded">2014-10-24</div>
                 </li>
                 -->
-                <li ng-repeat="artical in topics.articals" class="tl-item tl-left">
+                <li ng-repeat="artical in topics" class="tl-item tl-left">
                     <div class="tl-wrap b-primary">
                         <span class="tl-date" style="width: 5em;">{{artical.pubtime}}</span>
                         <div class="tl-content panel padder b-a block">
@@ -48,21 +83,21 @@
                                     <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{artical.imurl || imgDeg}}">
                                 </div>
                                 <div class="media-body">
-                                    <a href="{{artical.url}}" target="blank" class="h4">{{artical.title | titleFilters}}</a>
+                                    <a href="{{artical.url}}" target="blank" class="h4"><message>{{artical.title | titleFilters}}</message></a>
                                     <small class="block m-t-xs">摘要：{{artical.summary | titleFilters}}</small>
                                 </div>
                             </article>
                         </div>
                     </div>
                 </li>
-                <img  src = "public/img/loading.gif" ng-show = "topicLoading ">
-                <li  ng-show = "topic_no_data"> 
-                                   暂时木有数据！
+                <li class="tl-item tl-left" ng-show = "topicLoading ">
+                    <img  src = "public/img/loading.gif"  />
                 </li>
-                <li class="tl-header">
-                    <div class="btn btn-sm btn-default btn-rounded">更多</div>
+                <li class="tl-item tl-left"  ng-show = "topic_no_data"> 
+                                        暂时木有数据！
                 </li>
             </ul>
+            <pagination ng-hide = "topic_no_data" items-Per-Page="10" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm m-t-sm m-b pull-right" boundary-links="true"></pagination>
         </div>
     </div>
 </div>

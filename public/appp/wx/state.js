@@ -1,5 +1,5 @@
 
-angular.module('weixin.wx',['weixin.wx.topic','weixin.wx.search'])
+angular.module('weixin.wx',['weixin.wx.topic','weixin.wx.search','weixin.wx.public'])
     .config(function ($stateProvider){
         $stateProvider
             .state('wx',{

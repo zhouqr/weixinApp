@@ -1,5 +1,5 @@
 
-angular.module('weixin.wx.topic.edit',[])
+angular.module('weixin.wx.topic.edit',['services.topics'])
     .config(function($stateProvider){
         $stateProvider
             .state('wx.topic.edit',{
@@ -33,8 +33,6 @@ angular.module('weixin.wx.topic.edit',[])
           	  $scope.topicLoading = false;
           	  $scope.topic_no_data = true;
             });
-            
-  		  
   	   };
   	   $scope.search(keywords);
     	
@@ -43,8 +41,17 @@ angular.module('weixin.wx.topic.edit',[])
 	    };
   }])
     //修改专题
-  .controller('TopicEditCtrl', ['$scope','$http','$stateParams', '$modal',function($scope,$http,$stateParams,$modal) {
+  .controller('TopicEditCtrl', ['$scope','$http','$stateParams', '$modal','Topics',function($scope,$http,$stateParams,$modal,Topics) {
 	  $scope.topic = {};
+	  
+	  function alertHelp(className,info){
+  		  $("#alertinfo").slideDown(); 
+  		  $scope.alertInfo ={
+  				alertinfoClass:className,
+  				info:info,
+  		  };
+  		  window.setTimeout(function(){$("#alertinfo").slideUp();},2000); //2秒钟自动关闭
+	  };
 	  
 	  function defaultInfo(){
 		  $http({method:'get',url:'/topic/topicDetail',params:{id:$stateParams.id}})
@@ -61,22 +68,20 @@ angular.module('weixin.wx.topic.edit',[])
 	  
 	  $scope.editYes = function(){
 		  $scope.topic.id = $stateParams.id
-		  $http({method:'POST',url:'/Topic/updateTopic',params:$scope.topic})
-		  	.success(function(data){
-		    	  if(data.code == 401){
-		    		  $("#errorinfo").slideDown();
-					  window.setTimeout(function(){$("#errorinfo").slideUp();},2000); //2秒钟自动关闭
+		  
+		  Topics.topicEdit($scope.topic)
+		  .success(function(data){
+		  		  if(data.code == 401){
+		    		  alertHelp("alert-danger","专题名称重复！");
 		    		  $scope.topic = {};
 		    	  }
 		    	  else if(data.code == 200){
+		    		  alertHelp("alert-success","专题修改成功！");
 		    		  $("#successinfo").slideDown();
-					  window.setTimeout(function(){$(".alert-success").slideUp();},2000); //2秒钟自动关闭
-		    		  $scope.topic = {};
 		    	  }
 		      }, function(x) {
 		    }).error(function(data){
-		    	$("#errorinfo").slideDown();
-				  window.setTimeout(function(){$("#errorinfo").slideUp();},2000); //2秒钟自动关闭
+		    	  alertHelp("alert-danger","专题修改失败！");
 	    		  $scope.topic = {};
 		    });
 	  };

@@ -9,7 +9,7 @@
     
     <!-- js 引入 -->
     #{get 'js'/}
-    #{js ['directives','controllers','filters'] /}
+    #{js ['directives','controllers','filters','tools'] /}
     <!-- #{js ['head','jquery-1.11.0.min','angular','angular-ui-router.min','zui/zui','zui/auth','zui/password-match','zui/ueditor'] /} -->
     %{appPath='/public/appp'}%
     <script type="text/javascript">
@@ -23,7 +23,7 @@
 ${appjs.raw()} *{自动加载app目录中所有js，仅开发模式}*
 
 <script type="text/javascript">
-    angular.bootstrap(document.body,['app'])
+    angular.bootstrap(document.body,['app']) 
 </script>
 </body>
 </html>

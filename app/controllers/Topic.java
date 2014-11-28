@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import play.Logger;
 import play.data.validation.Min;
@@ -37,7 +39,9 @@ public class Topic extends BaseController{
 	 * @param endTime
 	 * @param introduction
 	 */
-	public static void addTopic(String name, String keywords, Date startTime, Date endTime, String introduction){
+	public static void addTopic(@Required String name, @Required String keywords,@Required Date startTime,@Required Date endTime, String introduction){
+		if(models.Topic.hasSameTopic(null, name))
+			renderJSON(ResultInfo.error("已有同名的主题！"));
 		Long topic_id = models.Topic.addTopic(name, keywords, startTime, endTime, introduction);
 		renderJSON(ResultInfo.success(topic_id));
 	}
@@ -62,7 +66,10 @@ public class Topic extends BaseController{
 	 * @param endTime
 	 * @param introduction
 	 */
-	public static void updateTopic(@Required Long id, String name, String keywords, Date startTime, Date endTime, String introduction){
+	public static void updateTopic(@Required Long id,@Required String name,@Required String keywords, @Required Date startTime,@Required Date endTime, String introduction){
+		if(models.Topic.hasSameTopic(id, name))
+			renderJSON(ResultInfo.error("已有同名的主题！"));
+		
 		boolean result = models.Topic.updateTopic(id, name, keywords, startTime, endTime, introduction);
 		if(result)
 		    renderJSON(ResultInfo.success());
@@ -86,8 +93,16 @@ public class Topic extends BaseController{
 	 * 获取当前用户的专题列表
 	 */
 	public static void topicList(@Required @Min(1)int page,@Required @Min(1)int pageSize){
+		//专题列表
 		List<models.Topic> topics = models.Topic.topicList(page,pageSize);
-		renderJSON(ResultInfo.success(topics));
+		User user = BaseController.currentUser();
+		//统计页码
+		Long count = models.Topic.count("delete_flag=0 and user_id=?", user.id);
+		JSONObject obj = new JSONObject();
+		obj.put("bigTotalItems", count);
+		obj.put("topics", topics);
+		
+		renderJSON(ResultInfo.success(obj));
 	}
 	
 	/**
@@ -116,7 +131,11 @@ public class Topic extends BaseController{
 	 */
 	public static void getTopicDocs(@Required Long id, @Required @Min(1) int page ,@Required @Min(1)int pageSize){
 		JSONArray docs = models.Topic.getTopicDocs(id, page, pageSize, true);
-		renderJSON(ResultInfo.success(docs));
+		Long count = models.Topic.countTopicDocs(id);
+		JSONObject obj = new JSONObject();
+		obj.put("bigTotalItems", count);
+		obj.put("articles", docs);
+		renderJSON(ResultInfo.success(obj));
 	}
 	
 	/**
@@ -129,7 +148,9 @@ public class Topic extends BaseController{
 		String[] categories = new String[day];
 		//count数据
 		Long[] data = new Long[day];
-		for(int i=day; i>0 ; i--){
+		//不统计当天，向前顺延1天
+		day +=1;
+		for(int i=day; i>1 ; i--){
 			String date = DateUtil.getDayBeforeNoTime(i-1);
 			categories[day-i] = date;
 			data[day-i] = models.Topic.countDocs(date, topic.keywords);
@@ -149,6 +170,15 @@ public class Topic extends BaseController{
 		long count = models.Topic.count("delete_flag=0 and user_id=?", user.id);
 		renderJSON(ResultInfo.success(count));
 	}
-
 	
+	/**
+	 * 获取发文章数目最多的公众号
+	 * @param id
+	 */
+	public static void getTopPerson(@Required Long id,int num){
+		if(num==0)
+			num = 5;
+		List<Object> persons = models.Topic.getTopicTopPerson(id,num);
+		renderJSON(ResultInfo.success(persons));
+	}
 }

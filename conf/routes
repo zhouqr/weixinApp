@@ -47,15 +47,24 @@ GET     /Topic/getTopicDocs                         Topic.getTopicDocs
 #获取专题文章数趋势分析
 GET     /Topic/docCountAnalysis                     Topic.getDayCount
 
+#获取专题发表文章最多的前几个微信号
+GET     /Topic/topPerson                            Topic.getTopPerson
+
 #search 检索
-#检索微信文章
+#实时检索微信文章
 GET     /Search/articles                            Search.searchArticals
+
+#本地检索微信文章
+GET     /Search/articles_local                      Search.searchArticals_local
 
 #检索微信号
 GET     /Search/wxs                           		Search.searchWxs
 
 #获取微信详情
 GET     /Search/wxDetail                            Search.get_wx_openid
+
+#检索指定公众号的文章详情
+GET     /Search/search_by_openid                    Search.search_by_openid
 
 #关注微信公众号
 GET     /AttrWeixin/attr                            AttrWeixin.attr
@@ -65,6 +74,8 @@ GET     /AttrWeixin/cancelAttr                      AttrWeixin.cancelAttr
 
 #获取关注微信公众号列表
 GET     /AttrWeixin/attrList                        AttrWeixin.getAttrList
+
+
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

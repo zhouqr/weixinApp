@@ -25,7 +25,7 @@
       </li>
       <li ui-sref-active="active">
         <a ui-sref="wx.topic.home">
-          <b class="label bg-info pull-right">25</b>
+          <topic_Count></topic_Count>
           <span>专题列表</span>
         </a>
       </li>
@@ -48,6 +48,16 @@
         </a>
       </li>
       <li ui-sref-active="active">
+        <a ui-sref="wx.public.add">
+          <span>新建公众号</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="wx.public.home">
+          <span>公众号列表</span>
+        </a>
+      </li>
+      <!-- <li ui-sref-active="active">
         <a ui-sref="wx.search.detail({open_id:'oIWsFt6uIIrDaFqH1FoTvB3os51U'})">
           <span>胶东在线</span>
         </a>
@@ -75,9 +85,17 @@
         <a ui-sref="wx.search.detail({open_id:'oIWsFtwp3kf5gF5wevv47pPr8RIE'})">
           <span>腾讯财经</span>
         </a>
-      </li>
+      </li> -->
       
     </ul>
   </li>
+  
+  <li>
+    <a ui-sref="wx.search.home({keywords:''})"class="auto">      
+      <i class="glyphicon glyphicon-search"></i>
+          <span class="font-bold">搜索</span>
+    </a>
+  </li>
+  
 </ul>
 <!-- / third -->

@@ -43,6 +43,12 @@ public class AttrWeixinPerson extends Model{
 	public Long user_id;
 	
 	/**
+	 * 公众号简介
+	 */
+	@Column(nullable = true)
+	public String intro;
+	
+	/**
 	 * 删除标志位
 	 */
 	@Column(nullable=false)

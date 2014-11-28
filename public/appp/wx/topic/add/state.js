@@ -1,5 +1,5 @@
 
-angular.module('weixin.wx.topic.add',['services.search'])
+angular.module('weixin.wx.topic.add',['services.search','services.topics'])
     .config(function($stateProvider){
         $stateProvider
             .state('wx.topic.add',{
@@ -12,9 +12,7 @@ angular.module('weixin.wx.topic.add',['services.search'])
     })
     
     .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'keywords','$http','Search',function($scope, $modalInstance, keywords,$http,Search) {
-	    
     	$scope.search = function(keywords){
-  		  
   		  $scope.topicLoading = true;
   		  $scope.weixinLoading = true;
   		  Search.searchArtical(keywords).success(function(data){
@@ -27,7 +25,6 @@ angular.module('weixin.wx.topic.add',['services.search'])
   				  }else{
   					    $scope.topic_no_data = false;
   				  }
-  				  
   			  }
             }).error(function(data){
           	  $scope.topicLoading = false;
@@ -43,27 +40,33 @@ angular.module('weixin.wx.topic.add',['services.search'])
 	    };
   }])
     //添加专题
-  .controller('TopicAddCtrl', ['$scope','$http','$modal', function($scope,$http,$modal) {
+  .controller('TopicAddCtrl', ['$scope','$http','$modal','Topics', function($scope,$http,$modal,Topics) {
 	  $scope.topic = {};
-	  
+	  function alertHelp(className,info){
+  		  $("#alertinfo").slideDown(); 
+  		  $scope.alertInfo ={
+  				alertinfoClass:className,
+  				info:info,
+  		  };
+  		  window.setTimeout(function(){$("#alertinfo").slideUp();},2000); //2秒钟自动关闭
+	  };
+	
 	  $scope.addYes = function(){
 		  $scope.topic.startTime = $("#d4311").val();
 		  $scope.topic.endTime = $("#d4312").val();
-		  $http({method:'post',url:'/Topic/addTopic',params:$scope.topic})
-		  	.success(function(data){
+		  Topics.topicAdd($scope.topic)
+		  .success(function(data){
 		    	  if(data.code == 401){
-		    		  $("#errorinfo").slideDown();
-					  window.setTimeout(function(){$("#errorinfo").slideUp();},2000); //2秒钟自动关闭
+		    		  alertHelp("alert-danger","专题名称重复！");
 		    		  $scope.topic = {};
 		    	  }
 		    	  else if(data.code == 200){
+		    		  alertHelp("alert-success","专题添加成功！");
 		    		  $("#successinfo").slideDown();
-					  window.setTimeout(function(){$(".alert-success").slideUp();},2000); //2秒钟自动关闭
 		    	  }
 		      }, function(x) {
 		    }).error(function(data){
-		    	$("#errorinfo").slideDown();
-				  window.setTimeout(function(){$("#errorinfo").slideUp();},2000); //2秒钟自动关闭
+		    	  alertHelp("alert-danger","专题添加失败！");
 	    		  $scope.topic = {};
 		    });
 	  };

@@ -18,16 +18,19 @@
                 <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{topic.imurl || imgDeg}}">
             </div>
             <div class="media-body">
-                <a href="{{topic.url}}" target="blank" class="h4">{{topic.title | titleFilters}}</a>
+                <a href="{{topic.url}}" target="blank" class="h4"><message>{{topic.title | titleFilters}}</message></a>
                 <small class="block m-t-xs">摘要：{{topic.summary| titleFilters}}</small>
                 <span class="text-xs"><span class="text-info">{{topic.pubtime}}</span> 来自 <a ui-sref="wx.search.detail({open_id:topic.open_id})" class="text-info">{{topic.sourcename}}</a></span>
             </div>
             <div class="line b-b"></div>
         </article>
-        <img  src = "public/img/loading.gif" ng-show = "topicLoading ">
+        <p ng-show = "topicLoading">
+            <img  src = "public/img/loading.gif" />
+        </p>
         <p  ng-show = "topic_no_data"> 
                           暂时木有数据！
         </p>
+        <pagination ng-hide = "topic_no_data" total-items="bigTotalItemsTopic" ng-model="bigCurrentPageTopic" max-size="maxSizeTopic" ng-change="pageChangedTopic(bigCurrentPageTopic);" class="pagination-sm m-t-sm m-b " boundary-links="true"></pagination>
     </tab>
     <tab>
       <tab-heading>
@@ -46,10 +49,13 @@
             </div>
             <div class="line b-b"></div>
         </article>
-        <img  src = "public/img/loading.gif" ng-show = "weixinLoading">
+        <p ng-show = "weixinLoading">
+            <img  src = "public/img/loading.gif" >
+        </p>
         <p  ng-show = "weixin_no_data"> 
                           暂时木有数据！
         </p>
+        <pagination ng-hide = "weixin_no_data" total-items="bigTotalItemsWx" ng-model="bigCurrentPageWx" max-size="maxSizeWx" ng-change="pageChangedWx(bigCurrentPageWx)" class="pagination-sm m-t-sm m-b " boundary-links="true"></pagination> 
     </tab>
 
   </tabset>

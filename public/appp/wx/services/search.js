@@ -15,26 +15,29 @@ angular.module('services.search', [])
             angular.extend(this, searchInfo);
         }
 
-        Search.searchArtical=function(keywords){
+        Search.searchArtical=function(keywords,page){
             return $http({method:'get',url:'/search/searchArticals',params:{
-            	keywords:keywords
+            	keywords:keywords,
+        		page:page
             }})
         }
-        Search.searchWxs=function(keywords){
+        Search.searchWxs=function(keywords,page){
         	return $http({method:'get',url:'/search/searchWxs',params:{
-        		keywords:keywords
+        		keywords:keywords,
+        		page:page
         	}})
         }
         
-        Search.searchWxDetail=function(open_id){
+        Search.searchWxDetail=function(open_id,page){
         	return $http({method:'get',url:'/search/get_wx_openid',params:{
-        		open_id:open_id
+        		open_id:open_id,
+        		page:page
         	}})
         }
+        Search.searchWxDetailByOpenid=function(params){
+        	return $http({method:'get',url:'/Search/search_by_openid',params:params})
+        }
 
-        /*Post.getPostDetail=function(postId,page,pagesize){
-            return $http.get('/postDetail/' + postId+'?page='+page+'&pageSize='+pagesize);
-        }*/
 
         return Search;
     })

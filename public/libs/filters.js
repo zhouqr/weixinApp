@@ -13,8 +13,14 @@ angular.module('weixin.filters', [])
     	}
     	var reg = new RegExp("\\?","g"); 
 		title = title.replace(reg,""); 					
-		var tit_disp = title;
-
-        return tit_disp;
+	//	var tit_disp = title;
+		var converter = document.createElement("DIV");
+		converter.innerHTML = title;
+		
+		var output = converter.innerText;
+		converter = null;
+		
+        return output;
     }
   });
+  

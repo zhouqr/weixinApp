@@ -1,0 +1,59 @@
+
+<div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
+<div class="col">
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3 "><i class="icon-user i-sm m-r-sm"></i>公众号<span class="m-n font-thin h5"> — 定向渗透，聚焦热点，让您对目标的动向一目了然</span></h1>
+</div>
+<div ng-controller="PublicListCtrl">
+    <div class="panel no-border">
+            <div class="panel-heading wrapper b-b b-light">
+              <h4 class="font-thin m-t-none m-b-none text-muted">公众号</h4>              
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            
+            <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
+						  <li ng-repeat="topic in topics"  class="list-group-item clearfix b-l-3x ">
+						    <a  class="avatar thumb pull-left m-r">
+						      <img ng-src="{{topic.headim || imgDeg}}">
+						    </a>
+						    <!-- <div class="pull-right text-sm text-muted">
+						      <span class="hidden-xs">2222</span>
+						      <i class="fa fa-paperclip ng-hide m-l-sm" ></i>
+						    </div> -->
+						    <div class="clear">
+						      <div><a ui-sref="wx.search.detail({open_id:topic.open_id})" class="text-md">{{topic.sourcename}}</a><span class="label bg-light m-l-sm"></span></div> 
+						      <div class="text-ellipsis m-t-xs">{{topic.intro}}</div>
+						    </div>      
+						  </li> 
+						  <li class="list-group-item" ng-show = "topicLoading">
+                  <img  src = "public/img/loading.gif" />
+              </li>
+              <li class="list-group-item" ng-show = "topic_no_data"> 
+                                   暂时木有数据！
+              </li>
+              <pagination  ng-hide = "topic_no_data" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm m-t-sm m-b pull-right" boundary-links="true"></pagination>
+            </ul>
+            <!-- <ul class="list-group list-group-lg m-b-none">
+              <li class="list-group-item" ng-repeat="topic in topics">
+                <a href="" class="thumb-sm m-r">
+                  <img class="r r-2x" ng-src="{{topic.headim || imgDeg}}">
+                </a>
+                <span class="pull-right label bg-primary inline m-t-sm">Admin</span>
+                <a ui-sref="wx.search.detail({open_id:topic.open_id})">{{topic.sourcename}}</a>
+              </li>
+              <li class="list-group-item" ng-show = "topicLoading">
+                  <img  src = "public/img/loading.gif" />
+              </li>
+              <li class="list-group-item" ng-show = "topic_no_data"> 
+                                   暂时木有数据！
+              </li>
+              
+            </ul> -->
+          </div>
+</div>
+
+</div>
+<div class="col w-xxs bg-white-only b-l bg-auto no-border-xs">
+</div>
+
+</div>

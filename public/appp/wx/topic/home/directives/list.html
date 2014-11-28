@@ -2,7 +2,7 @@
  <div class="text-ellipsis m-t-xs" >
       <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs" ng-show = "topDocs.length>0">
         <li ng-repeat="doc in topDocs.slice(0,5)" style="padding:5px 0px">
-          <span class="text-info">{{doc.pubtime}}</span>&nbsp;来自&nbsp;<span class="text-info ">{{doc.source_name}}</span>:&nbsp;<a href="{{doc.content_url}}" target="blank">{{doc.title | limitTo:26 | titleFilters}}</a>
+          <span class="text-info">{{doc.pubtime}}</span>&nbsp;来自&nbsp;<a ui-sref="wx.search.detail({open_id:doc.open_id})" class="text-info ">{{doc.source_name}}</a>:&nbsp;<a href="{{doc.content_url}}" target="blank">{{doc.title | limitTo:26 | titleFilters}}</a>
         </li>
       </ul>
       <img  src = "public/img/loading.gif" ng-show = "topDocs.length == 0">

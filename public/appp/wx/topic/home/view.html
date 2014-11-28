@@ -4,14 +4,16 @@
 <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
 <div class="col">
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3 ">专题 <span class="m-n font-thin h5"> — 整合信息，聚焦事件，让您对事件的发展一目了然</span></h1>
+  <h1 class="m-n font-thin h3 "><i class="icon-bar-chart i-sm m-r-sm"></i>专题 <span class="m-n font-thin h5"> — 整合信息，聚焦事件，让您对事件的发展一目了然</span></h1>
 </div>
+
 <div ng-controller="TopicListCtrl">
    <!-- list -->
   <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
     <li ng-repeat="topic in topics" class="list-group-item clearfix b-l-3x">
       <span class=" pull-left m-r">
-        <img style="width:260px;height:180px" ng-src="{{topic.image || imgDeg}}">
+         <chart id="topic.id"></chart>
+        <!-- <img  ng-src="{{topic.image || imgDeg}}"> -->
       </span>
       <div class="pull-right text-muted" style="font-size:15px">
         <a ui-sref="wx.topic.edit({id:topic.id})" title="修改">
@@ -23,17 +25,18 @@
         </a>
       </div>
       <div class="clear">
-      
         <div><a ui-sref="wx.topic.detail({id:topic.id})" class="text-md">{{topic.name | titleFilters}}</a><span class="label bg-danger m-l-sm">+{{topic.todayCount}}</span></div>
               <list id = "topic.id"></list>
       </div>      
     </li>
+    <pagination items-Per-Page="5" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm m-t-sm m-b pull-right" boundary-links="true"></pagination>
   </ul>
+  
   <!-- / list -->
 </div>
 
 </div>
-<div class="col w-md bg-white-only b-l bg-auto no-border-xs">
+ <div class="col w-xxs bg-white-only b-l bg-auto no-border-xs"> 
 </div>
 
 </div>

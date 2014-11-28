@@ -22,14 +22,8 @@
                   修改专题
          </div>
          <div class="panel-body">
-           <div id="errorinfo-common" class="alert ng-isolate-scope alert-danger alert-dismissable" style="display:none">
-                   <div ><span class="ng-binding ng-scope">修改失败</span></div>
-           </div>
-           <div id="errorinfo" class="alert ng-isolate-scope alert-danger alert-dismissable" style="display:none">
-                   <div ><span class="ng-binding ng-scope">{{errorinfo}}</span></div>
-           </div>
-           <div id="successinfo" class="alert ng-isolate-scope alert-success alert-dismissable" style="display:none">
-                   <div ><span class="ng-binding ng-scope">修改成功</span></div>
+           <div id="alertinfo" class="alert   {{alertInfo.alertinfoClass}}" style="display:none"><!-- alert-danger -->
+                   <div ><span class="ng-binding ng-scope">{{alertInfo.info}}</span></div>
            </div>
            <form class="form-horizontal form-validation" name = "addForm">
              <div class="form-group">

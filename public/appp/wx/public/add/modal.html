@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h3 class="modal-title">公众号检索信息</h3>
+</div>
+<div class="modal-body">
+    <article  class="media" style="border:1px solid #CCC;">
+        <div class="pull-left">
+            <img style="margin-bottom:5px; width:88px;height: 80px;" ng-src="{{topics.headim}}">
+        </div>
+        <div class="media-body">
+            <span class="h4">
+                {{topics.sourcename}}
+            </span>
+            <small class="block m-t-xs text-muted">微信号：{{topics.weixin_id}}</small>
+            <small class="block m-t-xs">功能介绍：<span>{{topics.intro}}</span></small>
+            <small class="block m-t-xs">微信认证：{{topics.verti}}</small>
+            
+            <!-- 详情页不要最近文章 <small class="block m-t-xs">最近文章：<span class="text-info">{{weixin.newArticle}}<span></small> -->
+        </div>
+  </article>
+
+  <div class="panel panel-default" style="margin-top: 10px;">
+        <div class="panel-heading font-bold">
+            最近文章
+        </div>
+        <div class="panel-body">
+            <ul class="timeline">
+                <!-- 时间轴的头
+                <li class="tl-header">
+                    <div class="btn btn-sm btn-default btn-rounded">2014-10-24</div>
+                </li>
+                -->
+                <li ng-repeat="artical in topics.articals" class="tl-item tl-left">
+                    <div class="tl-wrap b-primary">
+                        <span class="tl-date" style="width: 5em;"><message>{{artical.pubtime}}</message></span>
+                        <div class="tl-content panel padder b-a block">
+                            <span class="arrow left pull-up hidden-left"></span>
+                            <span class="arrow right pull-up visible-left"></span>
+                            <article class="media">
+                                <div class="pull-left">
+                                    <img style="margin-bottom:5px;width:88px;height: 80px;" ng-src="{{artical.imurl || imgDeg}}">
+                                </div>
+                                <div class="media-body">
+                                    <a href="{{artical.url}}" target="blank" class="h4">{{artical.title | titleFilters}}</a>
+                                    <small class="block m-t-xs">摘要：{{artical.summary | titleFilters}}</small>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </li>
+                <img  src = "public/img/loading.gif" ng-show = "topicLoading ">
+                <li  ng-show = "topic_no_data"> 
+                                   暂时木有数据！
+                </li>
+                <li class="tl-header">
+                    <div class="btn btn-sm btn-default btn-rounded">更多</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">                  
+    <button class="btn btn-primary" ng-click="cancel()">确定</button>
+</div>

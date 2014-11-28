@@ -1,60 +1,50 @@
 var list = null;
-angular.module('weixin.wx.topic.home',['weixin.wx.topic.home.directives.list'])
+angular.module('weixin.wx.topic.home',['weixin.wx.topic.home.directives.list','services.topics'])
     .config(function($stateProvider){
         $stateProvider
             .state('wx.topic.home',{
                 url:'/home',
                 templateUrl: appPath + '/wx/topic/home/view.html',
                 controller:function($scope,$stateParams,$state){
-                	console.log("");
                 }
             })
     })
-    .controller('InstanceCtrl', ['$scope', '$modalInstance', 'id','$http',function($scope, $modalInstance, id,$http) {
+    .controller('InstanceCtrl', ['$scope', '$modalInstance', 'id','$http','Topics',function($scope, $modalInstance, id,$http,Topics) {
 	    $scope.ok = function () {
-	    	$http({
-				  method: 'GET',
-				  url: 'Topic/delTopic',
-				  params:{
-					  id:id
-				  }
-			  }).success(function(data, status) {
+	    	Topics.topicDel(id).success(function(data, status) {
 				 if(data.code == 200){
 					 $modalInstance.close();
-				     list();
+				     list(1);
 				 }
 			 });
 	    };
-	
 	    $scope.cancel = function () {
 	      $modalInstance.dismiss('cancel');
 	    };
   }])
     
    //获取专题列表
-  .controller('TopicListCtrl', ['$scope','$http','$modal', function($scope,$http,$modal) {
+  .controller('TopicListCtrl', ['$scope','$http','$modal','Topics', function($scope,$http,$modal,Topics) {
 	  $scope.imgDeg  = "public/img/topics/yantai.jpg";
-	  list =function(){
-		  $http({
-			  method: 'GET',
-			  url: 'topic/topicList',
-			  params:{
-			  }
-		  }).success(function(data, status) {
+	  
+	  $scope.bigTotalItems = 0;
+	  $scope.bigCurrentPage = 1;
+	  $scope.maxSize = 5;
+	  
+	  list =function(page){
+		  Topics.topicList(page,5).success(function(data, status) {
 			 if(data.code == 200){
-				 $scope.topics = data.info;
-				 angular.forEach($scope.topics, function(n,i) {
-					 if(i>7){
-						 n.image = "public/img/topics/yantai.jpg";
-					 }
-					 else{
-						 n.image = "public/img/topic_img/0"+n.id+".jpg";
-					 }
-	       		 });
+				 $scope.topics = data.info.topics;
+				 $scope.bigTotalItems = data.info.bigTotalItems;
 			 }
 		  });
 	  };
-	  list();
+	  list(1);
+	  
+	  $scope.pageChanged = function() {
+		  list($scope.bigCurrentPage);
+	  };
+	  
 	  $scope.open = function (size,id) {
 	      var modalInstance = $modal.open({
 	        templateUrl: 'myModalContent.html',
